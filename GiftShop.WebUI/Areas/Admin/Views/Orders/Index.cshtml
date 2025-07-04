@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GiftShop.Entity.Entities.Order>
+
+@{
+    ViewData["Title"] = "Siparişler";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@* <p>
+    <a asp-action="Create" class="btn btn-outline-primary">
+        <i class="fa-solid fa-plus"></i> Yeni Sipariş Ekle
+    </a>
+</p> *@
+<table class="table">
+    <thead>
+        <tr>
+			<th>
+				@Html.DisplayNameFor(model => model.OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+				@Html.DisplayFor(modelItem => item.OrderID)
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+                <td>
+                    @item.CalculatedTotalAmount.ToString("C") <!-- ₺ biçiminde göstermek için -->
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppUser.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OrderID">Güncelle</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderID">Detay</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrderID">Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}

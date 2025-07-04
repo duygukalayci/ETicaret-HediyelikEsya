@@ -1,0 +1,37 @@
+﻿@model GiftShop.Entity.Entities.OrderDetail
+
+@{
+    ViewData["Title"] = "Sipariş Detayını Sil";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Sipariş Detayını Sil</h1>
+
+<h3>Bu sipariş detayını silmek istediğinizden emin misiniz?</h3>
+<div>
+    <h4>Detaylar</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(m => m.Quantity)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(m => m.Quantity)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(m => m.UnitPrice)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(m => m.UnitPrice)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(m => m.TotalAmount)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(m => m.TotalAmount)</dd>
+
+        <dt class="col-sm-2">Sipariş Durumu</dt>
+        <dd class="col-sm-10">@Model.Order?.Status</dd>
+
+        <dt class="col-sm-2">Ürün Adı</dt>
+        <dd class="col-sm-10">@Model.Product?.Name</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="OrderDetailID" />
+        <input type="submit" value="Sil" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-route-orderId="@Model.OrderID">Listeye Dön</a>
+    </form>
+</div>

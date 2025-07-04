@@ -1,0 +1,68 @@
+﻿@model IEnumerable<GiftShop.Entity.Entities.Slider>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libertinus+Math&display=swap" rel="stylesheet">
+
+<style>
+    .section.hero {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .container {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    .hero-card {
+        min-height: 600px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 40px 60px 0 60px; /* üst, sağ, alt, sol */
+        color: white;
+    }
+
+    .card-content {
+        max-width: 600px;
+    }
+
+    .hero-title {
+        font-size: 4.5rem;
+        font-weight: 700; /* Kalın yazı */
+        margin-left: 20px;
+        margin-top: 60px; /* Burayı artırarak yazıyı aşağı kaydır */
+        max-width: 600px;
+        line-height: 1.1;
+		color: white;
+        font-family: "Libertinus Math", system-ui;
+    }
+
+
+</style>
+
+<section class="section hero" id="home" aria-label="hero" data-section>
+    <div class="container">
+        <ul class="has-scrollbar" style="margin-top:0; padding-top:0;">
+            @{
+                var emojis = new string[] { "💐", "📸", "💐", "🌹" };
+                int i = 0;
+            }
+            @foreach (var item in Model)
+            {
+                var emoji = emojis[i % emojis.Length];
+                <li class="scrollbar-item">
+                    <div class="hero-card has-bg-image" style="background-image: url('@Url.Content("~/Img/" + item.ImageUrl)')">
+                        <div class="card-content">
+                            <h1 class="h1 hero-title"  >@emoji @item.Title</h1>
+                        </div>
+                    </div>
+                </li>
+                i++;
+            }
+        </ul>
+    </div>
+</section>
+

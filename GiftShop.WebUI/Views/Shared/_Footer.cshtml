@@ -1,0 +1,54 @@
+﻿<div class="container">
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+
+        <!-- Logo ve Telif -->
+        <div class="col mb-3">
+            <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none" aria-label="HediyeStore">
+            </a>
+        </div>
+
+
+        <!-- Kurumsal -->
+        <div class="col mb-3">
+            <h5 style="font-size:25px;">Kurumsal</h5>
+			<br />
+            <ul class="nav flex-column">
+                <li><a asp-controller="Home" asp-action="About" class="nav-link p-0 text-body-secondary">Hakkımızda</a></li>
+				<br />
+
+                <li class="nav-item mb-2"><a href="@Url.Action("VizyonMisyon", "Home")" class="nav-link p-0 text-body-secondary">Vizyon & Misyon</a></li>
+				<br />
+
+                <li class="nav-item mb-2"><a href="@Url.Action("ContactUs", "Home")" class="nav-link p-0 text-body-secondary">İletişim</a></li>
+
+            </ul>
+        </div>
+
+        <!-- Yardım -->
+        <div class="col mb-3">
+            <h5 style="font-size:25px;">Bize Ulaşın</h5>
+            <p><strong>Email:</strong> <a href="mailto:info@hediyestore.com" class="text-body-secondary">info@hediyestore.com</a></p>
+            <p><strong>Telefon:</strong> <a href="tel:+901234567890" class="text-body-secondary">+90 123 456 78 90</a></p>
+            <p><strong>Adres:</strong> <span class="text-body-secondary">CaddeBaşakşehir, No: 123, Başakşehir, İstanbul, Türkiye</span></p>
+
+        </div>
+
+
+        <!-- Popüler -->
+  
+
+        <!-- Sosyal Medya ve Ödeme -->
+        <div class="col mb-3 ">
+            <h5 style="font-size:25px;">Bizi Takip Edin</h5>
+            <div class="d-flex gap-3 mb-3">
+                <a href="#" class="text-body-secondary fs-1"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-body-secondary fs-1"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-body-secondary fs-1"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-body-secondary fs-1"><i class="bi bi-youtube"></i></a>
+            </div>
+        
+
+        </div>
+
+    </footer>
+</div>

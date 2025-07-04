@@ -1,0 +1,175 @@
+﻿<style>
+    .navbar-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .menu-item {
+        position: relative;
+    }
+
+    .navbar-link {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .navbar-link .arrow {
+            margin-left: 0.3em;
+            font-size: 0.6em;
+            transition: transform 0.3s ease;
+        }
+
+    .menu-item.has-submenu > .navbar-link:focus,
+    .menu-item.has-submenu:hover > .navbar-link {
+        outline: none;
+        color: #007bff;
+    }
+
+    .menu-item.has-submenu > .navbar-link[aria-expanded="true"] .arrow {
+        transform: rotate(180deg);
+    }
+
+    .submenu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        border-radius: 0.25rem;
+        list-style: none;
+        padding: 0.5rem 0;
+        margin: 0;
+        min-width: 200px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 999;
+    }
+
+    .menu-item.has-submenu:hover > .submenu,
+    .menu-item.has-submenu > .submenu.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .submenu li {
+        padding: 0;
+    }
+
+    .submenu-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .submenu-link:hover,
+        .submenu-link:focus {
+            background-color: #f8f9fa;
+            outline: none;
+        }
+
+
+</style>
+
+
+
+@model IEnumerable<Category>
+
+@{
+	// foreach (var anaKategori in Model.Where(c =>
+	// c.IsActive &&
+	// c.IsTopMenu == true &&
+	// (c.ParentCategoryID == null || c.ParentCategoryID == 0)))
+	// {
+	// 	<li class="nav-item">
+	// 		<a href="#collection" class="navbar-link has-after">@anaKategori.Name</a>
+	// 	</li>
+	// }
+
+    // @foreach (var anaKategori in Model.Where(c =>
+    //     c.IsActive &&
+    //     c.IsTopMenu == true &&
+    //     (c.ParentCategoryID == null || c.ParentCategoryID == 0)))
+    // {
+    //     var altKategoriler = anaKategori.SubCategories
+    //     .Where(sc => sc.IsActive)
+    //     .ToList();
+
+    //     if (altKategoriler.Any())
+    //     {
+    //             <li>
+    //                 <a href="#" class="navbar-link has-after">@anaKategori.Name <span class="arrow">&#9662;</span></a>
+    //                 <ul class="dropdown-menu">
+    //                     @foreach (var altKategori in altKategoriler)
+    //                     {
+    //                         <li>
+    //                             <a href="@Url.Action("Index", "Products", new { categoryId = altKategori.CategoryID })" class="dropdown-link">
+    //                                 @altKategori.Name
+    //                             </a>
+    //                         </li>
+    //                     }
+    //                 </ul>
+    //             </li>
+    //     }
+    //     else
+    //     {
+    //             <li>
+    //                 <a href="@Url.Action("Index", "Products", new { categoryId = anaKategori.CategoryID })" class="navbar-link has-after">
+    //                     @anaKategori.Name
+    //                 </a>
+    //             </li>
+    //     }
+    // }
+    <ul class="navbar-list" role="menubar">
+        @foreach (var anaKategori in Model.Where(c =>
+            c.IsActive &&
+            c.IsTopMenu == true &&
+            (c.ParentCategoryID == null || c.ParentCategoryID == 0)))
+        {
+            var altKategoriler = anaKategori.SubCategories.Where(sc => sc.IsActive).ToList();
+            var hasSub = altKategoriler.Any();
+            var menuId = $"menu-{anaKategori.CategoryID}";
+            <li class="menu-item @(hasSub ? "has-submenu" : "")" role="none">
+                <a href="@(hasSub ? "#" : Url.Action("Index", "Products", new { categoryId = anaKategori.CategoryID }))"
+                   class="navbar-link"
+                   aria-haspopup="@(hasSub.ToString().ToLower())"
+                   aria-expanded="false"
+                   aria-controls="@menuId"
+                   role="menuitem"
+                   tabindex="0">
+                    @anaKategori.Name
+                    @if (hasSub)
+                    {
+                        <span class="arrow" aria-hidden="true">&#x25BC;</span>
+                    }
+                </a>
+                @if (hasSub)
+                {
+                    <ul class="submenu" id="@menuId" role="menu" aria-label="@anaKategori.Name Alt Menü">
+                        @foreach (var altKategori in altKategoriler)
+                        {
+                            <li role="none">
+                                <a href="@Url.Action("Index", "Products", new { categoryId = altKategori.CategoryID })" class="submenu-link" role="menuitem" tabindex="-1">
+                                    @altKategori.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+    
+}

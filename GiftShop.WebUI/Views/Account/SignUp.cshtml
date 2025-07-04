@@ -1,0 +1,100 @@
+﻿@model GiftShop.Entity.Entities.AppUser
+
+@{
+    ViewData["Title"] = "Üye Ol";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #f5f5f5;
+    }
+
+    .register-container {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .SignUp-form {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+        font-size: 18px;
+    }
+
+    .SignUp-form img {
+            display: block;
+            margin: 0 auto 25px auto;
+            width: 100px;
+            height: auto;
+    }
+
+    .SignUp-form h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+    }
+
+    .SignUp-form .form-control {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            font-size: 18px;
+            height: auto;
+    }
+
+    .SignUp-form button {
+            padding: 12px 30px;
+            font-size: 18px;
+            display: block;
+            margin: 0 auto;
+            width: auto;
+    }
+
+    .text-muted {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+        color: #777;
+    }
+
+    .link-hover {
+        color: black; /* normal rengi */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .link-hover:hover {
+            color: #0056b3; /* üzerine gelince renk */
+            text-decoration: underline; /* istersen altı çizili */
+     }
+
+</style>
+
+<div class="register-container">
+    <form asp-action="SignUp" method="post" class="SignUp-form">
+
+
+
+        <img src="/giftshopunklasörü/glowing-master/assets/images/2.png" alt="Logo" />
+        <h1>Üye Ol</h1>
+
+        <input asp-for="Name" class="form-control" placeholder="Ad" required />
+        <input asp-for="Surname" class="form-control" placeholder="Soyad" required />
+        <input asp-for="UserName" class="form-control" placeholder="Kullanıcı Adı" required />
+        <input asp-for="Phone" class="form-control" placeholder="Telefon" required />
+        <input asp-for="Email" class="form-control" placeholder="Email adresiniz" required />
+        <input asp-for="Password" type="password" class="form-control" placeholder="Şifre" required />
+
+        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+
+        <p class="text-muted">Zaten bir hesabın var mı? <a href="/Account/SignIn/" class="link-hover">>Giriş Yap</a></p>
+    </form>
+</div>
+
+

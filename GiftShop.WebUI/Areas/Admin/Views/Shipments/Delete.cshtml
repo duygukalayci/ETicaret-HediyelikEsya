@@ -1,0 +1,40 @@
+﻿@model GiftShop.Entity.Entities.Shipment
+
+@{
+    ViewData["Title"] = "Kargo Kaydını Sil";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <h4>Kargo Bilgileri</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Sipariş No</dt>
+        <dd class="col-sm-10">@Model.Order?.OrderID</dd>
+
+        <dt class="col-sm-2">Kullanıcı</dt>
+        <dd class="col-sm-10">@Model.Order?.AppUser?.Email</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Carrier)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Carrier)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.TrackingNumber)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.TrackingNumber)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ShippedDate)</dt>
+        <dd class="col-sm-10">
+            @(Model.ShippedDate.HasValue? Model.ShippedDate.Value.ToString("dd.MM.yyyy") : "-")
+        </dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DeliveredDate)</dt>
+        <dd class="col-sm-10">
+            @(Model.DeliveredDate.HasValue? Model.DeliveredDate.Value.ToString("dd.MM.yyyy") : "-")
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="ShipmentID" />
+        <input type="submit" value="Sil" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Listeye Dön</a>
+    </form>
+</div>

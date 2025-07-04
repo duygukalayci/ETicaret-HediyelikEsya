@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GiftShop.Entity.Entities.Slider>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">
+        <i class="fa-solid fa-plus"></i> Yeni Slider Ekle
+    </a>
+</p>
+<table class="table  table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <a href="/Img/@item.ImageUrl">
+                        <img src="/Img/@item.ImageUrl" height="100" />
+					</a>
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SliderID">Düzenle</a> |
+                <a asp-action="Details" asp-route-id="@item.SliderID">Detay</a> |
+                <a asp-action="Delete" asp-route-id="@item.SliderID">Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,50 @@
+﻿@model UserEditViewModel
+
+@{
+    ViewData["Title"] = "Profilim";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<h2 style="text-align:center; margin-bottom: 20px;">@ViewData["Title"]</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div style="text-align:center; color:green; margin-bottom: 20px;">
+        @TempData["Message"]
+    </div>
+}
+
+<form method="post" asp-action="Profile" 
+style="max-width: 500px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <input type="hidden" asp-for="AppUserID" />
+
+    <label>Kullanıcı Adı:</label>
+    <input asp-for="UserName" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <span asp-validation-for="UserName" class="text-danger"></span>
+
+    <label>Ad:</label>
+    <input asp-for="Name" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+
+    <label>Soyad:</label>
+    <input asp-for="Surname" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <span asp-validation-for="Surname" class="text-danger"></span>
+
+    <label>E-posta:</label>
+    <input asp-for="Email" style="width: 100%; padding: 8px; margin-bottom: 10px;" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+
+    <label>Telefon:</label>
+    <input asp-for="Phone" style="width: 100%; padding: 8px; margin-bottom: 20px;" />
+    <span asp-validation-for="Phone" class="text-danger"></span>
+    <input asp-for="Password" type="password" placeholder="Yeni şifrenizi girin (boş bırakabilirsiniz)" />
+    <span asp-validation-for="Password" class="text-danger"></span>
+
+
+    <button type="submit" class="mt-5" style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 8px; font-weight: bold;">Kaydet</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

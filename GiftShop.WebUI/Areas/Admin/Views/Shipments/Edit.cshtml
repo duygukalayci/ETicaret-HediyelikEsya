@@ -1,0 +1,60 @@
+﻿@model GiftShop.Entity.Entities.Shipment
+
+@{
+    ViewData["Title"] = "Kargo Takip Düzenle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="ShipmentID" />
+            <input type="hidden" asp-for="OrderID" />
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Sipariş No</label>
+                <input class="form-control" value="@Model.OrderID" readonly />
+            </div>
+
+            @if (Model.Order?.AppUser != null)
+            {
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">Kullanıcı</label>
+                    <input class="form-control" value="@Model.Order.AppUser.Email" readonly />
+                </div>
+            }
+
+            <div class="form-group mb-3">
+                <label asp-for="Carrier" class="form-label fw-bold"></label>
+                <input asp-for="Carrier" class="form-control" />
+                <span asp-validation-for="Carrier" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TrackingNumber" class="form-label fw-bold"></label>
+                <input asp-for="TrackingNumber" class="form-control" />
+                <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ShippedDate" class="form-label fw-bold"></label>
+                <input asp-for="ShippedDate" class="form-control" type="date" />
+                <span asp-validation-for="ShippedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DeliveredDate" class="form-label fw-bold"></label>
+                <input asp-for="DeliveredDate" class="form-control" type="date" />
+                <span asp-validation-for="DeliveredDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-success">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>

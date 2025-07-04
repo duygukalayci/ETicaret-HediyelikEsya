@@ -1,0 +1,280 @@
+﻿@using GiftShop.WebUI.ExtensionMethods
+
+<style>
+	.header-actions {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 30px; /* Butonlar arası eşit ve geniş boşluk */
+		justify-content: flex-start;
+	}
+
+	.header-action-btn {
+		background: none;
+		border: none;
+		cursor: pointer;
+		position: relative;
+		font-size: 24px; /* ikon büyüklüğü */
+	}
+
+	.dropdown-menu ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.dropdown-menu li {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 5px 15px;
+	}
+
+	.dropdown-menu img {
+		width: 40px;
+		height: 40px;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+
+	.dropdown-menu div {
+		white-space: normal !important;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		max-width: 380px; /* Dropdown içi genişlikten biraz küçük */
+	}
+
+	.dropdown-menu
+	{
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: white;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+		border-radius: 4px;
+		width: 320px;
+		white-space: normal;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		max-height: 400px; /* Çok uzun dropdownlar için scroll */
+		display: none;
+		padding: 5px 0;
+		z-index: 1050;
+		box-sizing: border-box;
+		font-size: 14px;
+		overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu */
+	}
+
+
+
+
+	.dropdown-menu a {
+			display: block;
+			padding: 10px 15px;
+			color: black;
+			text-decoration: none;
+			font-size: 16px;
+	}
+
+	.cart-dropdown-menu {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		width: 600px;
+		max-height: 400px;
+		background: white;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+		border-radius: 6px;
+		padding: 15px;
+		overflow-y: auto;
+		display: none;
+		z-index: 2000;
+		box-sizing: border-box;
+	}
+
+	.cart-dropdown-menu .btn {
+			display: block;
+			width: 100%;
+			text-align: center;
+			margin-top: 15px;
+	}
+</style>
+
+<header class="header">
+
+	@*  <div class="alert">
+            <div class="container">
+                <p class="alert-text">Free Shipping On All U.S. Orders $50+</p>
+            </div>
+        </div> *@
+
+	<div class="header-top" data-header>
+		<div class="container">
+
+			<button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+				<span class="line line-1"></span>
+				<span class="line line-2"></span>
+				<span class="line line-3"></span>
+			</button>
+
+			<form method="get" action="/Products/Search" class="input-wrapper">
+				<input type="search" name="q" placeholder="Search product" class="search-field" />
+				<button type="submit" class="search-submit" aria-label="search">
+					<ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+				</button>
+			</form>
+
+
+			<a href="#" class="logo">
+				<img src="~/giftshopunklasörü/glowing-master/assets/images/hediyeStoreLogo.png" width="250" height="50" alt="Glowing">
+			</a>
+
+			<div class="header-actions">
+
+				@if (User.Identity != null && User.Identity.IsAuthenticated)
+				{
+					<button class="header-action-btn" aria-label="user" id="userBtn" onclick="toggleMenu()"
+							style="display:flex; align-items:center; gap:8px; font-size:16px; padding-left:0;">
+						<ion-icon name="person-outline" aria-hidden="true" style="font-size:24px;"></ion-icon>
+						<span>Hesabım</span>
+					</button>
+
+
+
+					<div id="userMenu" class="dropdown-menu">
+						<a href="/Account/Profile/">Kullanıcı Bilgilerim</a>
+						<a href="/Account/Edit/">Siparişlerim</a>
+						<a href="/Account/">Değerlendirmelerim</a>
+						<a href="/Account/SignOut/">Oturumu Kapat</a>
+					</div>
+
+			@* 		<div class="position-relative">
+						<button class="header-action-btn" id="cartToggleBtn" aria-label="cart item" style="color: black;">
+							<ion-icon name="bag-handle-outline" style="font-size: 26px;"></ion-icon>
+						</button>
+
+						<div id="cartDropdown" class="cart-dropdown-menu">
+							@await Component.InvokeAsync("Cart")
+						</div>
+					</div>
+ *@
+
+
+				}
+				else
+				{
+					<button class="header-action-btn" aria-label="user" id="userBtn" onclick="toggleMenu()">
+						<ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+					</button>
+
+					<div id="userMenu" class="dropdown-menu">
+						<a href="/Account/SignIn/">Giriş</a>
+						<a href="/Account/SignUp/">Üye Ol</a>
+					</div>
+
+				}
+				@{
+					var favorites = Context.Session.GetJson<List<GiftShop.Entity.Entities.Product>>("GetFavorites") ?? new List<GiftShop.Entity.Entities.Product>();
+					var favCount = favorites.Count;
+				}
+				<button class="header-action-btn" aria-label="favorite" onclick="location.href='/Favorites'">
+					<ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
+					<span class="btn-badge">@favCount</span>
+				</button>
+
+
+
+
+
+			</div>
+			<nav class="navbar">
+				<ul class="navbar-list">
+					<li>
+						<a href="/Home/Index/" class="navbar-link has-after">Anasayfa</a>
+					</li>
+					@await Component.InvokeAsync("Categories")
+					<li>
+						<a href="/Home/ContactUs/" class="navbar-link has-after">İletişim</a>
+					</li>
+					<li>
+						<a href="#blog" class="navbar-link has-after">Blog</a>
+					</li>
+				</ul>
+			</nav>
+			@if (User.Identity != null && User.Identity.IsAuthenticated)
+			{
+
+
+			}
+		</div>
+	</div>
+
+	<!--
+	  - #MOBILE NAVBAR
+	-->
+	<div class="sidebar">
+		<div class="mobile-navbar" data-navbar>
+			<div class="wrapper">
+				<a href="#" class="logo">
+					<img src="~/giftshopunklasörü/glowing-master/assets/images/logo.png" width="179" height="26" alt="Glowing">
+				</a>
+
+				<button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+					<ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+				</button>
+			</div>
+
+			<ul class="navbar-list">
+
+				<li>
+					<a href="#home" class="navbar-link" data-nav-link>Home</a>
+				</li>
+
+				<li>
+					<a href="#collection" class="navbar-link" data-nav-link>Collection</a>
+				</li>
+
+				<li>
+					<a href="#shop" class="navbar-link" data-nav-link>Shop</a>
+				</li>
+
+				<li>
+					<a href="#offer" class="navbar-link" data-nav-link>Offer</a>
+				</li>
+
+				<li>
+					<a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+				</li>
+
+			</ul>
+
+		</div>
+
+		<div class="overlay" data-nav-toggler data-overlay></div>
+	</div>
+
+</header>
+
+<script>
+
+
+
+
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const toggleBtn = document.getElementById("cartToggleBtn");
+		const dropdown = document.getElementById("cartDropdown");
+
+		toggleBtn.addEventListener("click", function (e) {
+			e.preventDefault();
+			dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "block" : "none";
+		});
+
+		// Dışarı tıklanınca menüyü kapat
+		document.addEventListener("click", function (e) {
+			if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+				dropdown.style.display = "none";
+			}
+		});
+	});
+</script>

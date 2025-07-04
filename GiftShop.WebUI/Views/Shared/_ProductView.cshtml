@@ -1,0 +1,47 @@
+﻿@model Product
+
+<div class="col mb-5">
+    <div class="card h-100">
+        <!-- Product image-->
+
+        <a href="/Products/Details/@Model.ProductID">
+            <img class="card-img-top" src="~/Img/@Model.ImageUrl" >
+        </a>
+
+
+
+        <!-- Product details-->
+        <div class="card-body p-4">
+            <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">@Model.Name</h5>
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">
+                    @Model.Price ₺
+                </span>
+            </div>
+        </div>
+        <!-- Product actions-->
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <form asp-controller="Cart" asp-action="Add" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="productId" value="@Model.ProductID" />
+                <input type="hidden" name="quantity" value="1" />
+                <div class="text-center">
+                    <button class="btn btn-outline-dark mt-auto" type="submit">Sepete Ekle</button>
+                </div>
+            </form>
+
+
+        </div>
+
+        <!-- Favorilere Ekle Butonu -->
+        <form method="post" action="/Favorites/Add" style="display:inline;">
+            <input type="hidden" name="ProductID" value="@Model.ProductID" />
+            <button type="submit" class="btn btn-outline-danger mt-auto" title="Favorilere Ekle">
+                <ion-icon name="heart-outline" style="font-size: 1.2rem;"></ion-icon>
+            </button>
+        </form>
+
+    </div>
+</div>

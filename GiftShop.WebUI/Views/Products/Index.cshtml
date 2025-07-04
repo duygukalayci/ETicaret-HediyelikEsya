@@ -1,0 +1,169 @@
+﻿@model IEnumerable<GiftShop.Entity.Entities.Product>
+
+@{
+	ViewData["Title"] = ViewBag.CategoryName ?? "Ürünler";
+	Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+@if (!Model.Any())
+{
+	<div class="alert alert-info">Bu kategoride ürün bulunmamaktadır.</div>
+}
+else
+{
+	<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+		@foreach (var product in Model)
+		{
+			<div class="col mb-5">
+				<div class="card h-100 position-relative">
+					<!-- Favori kalp ikonu -->
+					<form asp-controller="Favorites" asp-action="Add" method="post" class="favorite-icon-form">
+						<input type="hidden" name="productId" value="@product.ProductID" />
+						<button type="submit" class="btn btn-fav" title="Favorilere Ekle">
+							<i class="bi bi-heart"></i>
+						</button>
+					</form>
+
+					@if (!string.IsNullOrEmpty(product.ImageUrl))
+					{
+						<img class="card-img-top" style="height: 300px; width: auto; object-fit: contain; background-color: #f8f9fa;" src="@Url.Content("~/img/" + product.ImageUrl)" />
+					}
+					else
+					{
+						<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Resim Yok" />
+					}
+
+					<div class="card-body p-4">
+						<div class="text-center">
+							<h5 class="fw-bolder" style="font-family: 'Open Sans' , sans-serif;">
+								@product.Name
+							</h5>
+							<div class="text-center">
+								<span>@product.Price.ToString("C")</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-footer p-3 border-top-0 bg-transparent">
+						<div class="d-flex justify-content-center gap-3 flex-wrap">
+							<a class="btn btn-detaylar px-4" href="@Url.Action("Details", "Products", new { id = product.ProductID })">
+								<i class="bi bi-search"></i> Detaylar
+							</a>
+
+							<form asp-controller="Cart" asp-action="Add" method="post">
+								<input type="hidden" name="productId" value="@product.ProductID" />
+								<div class="text-center">
+									<button class="btn btn-outline-dark mt-auto" type="submit">
+										<i class="bi bi-cart-fill me-1"></i>
+										Sepete Ekle
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+<style>
+	.card {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	/*  .card-body {
+			flex-grow: 1; /* kart içindeki ana içerik alanı kalan alanı kaplasın */
+
+
+	.card-footer {
+		flex-shrink: 0; /* footer sabit kalsın */
+	}
+
+
+
+	.card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+	}
+
+	.btn-detaylar {
+		background-color: #fff;
+		color: #000;
+		border: 1px solid #000;
+		font-weight: 500;
+		padding: 10px 20px;
+		border-radius: 6px;
+		transition: all 0.3s ease;
+	}
+
+		.btn-detaylar:hover {
+			background-color: #000;
+			color: #fff;
+		}
+
+	.btn-sepet {
+		background-color: #000;
+		color: #fff;
+		border: 2px solid #000;
+		padding: 10px 20px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		border-radius: 6px;
+	}
+
+		.btn-sepet:hover {
+			background-color: #fff;
+			color: #000;
+			box-shadow: 0 0 0 2px #000 inset;
+		}
+
+
+	.btn {
+		border-radius: 8px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+	}
+
+	.d-flex.gap-3 .btn {
+		min-width: 130px; /* butonlar hizalı dursun diye */
+		text-align: center;
+	}
+
+	.favorite-icon-form {
+		position: absolute;
+		top: 6px;
+		right: 58px;
+	}
+
+	.btn-fav {
+		background-color: rgba(255, 255, 255, 0.9);
+		border: none;
+		color: #e63946;
+		cursor: pointer;
+		border-radius: 8px; /* kareyi hafif yuvarlak yapar */
+		padding: 6px 10px;
+		width: 36px;
+		height: 36px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 0 0 5px rgba(0,0,0,0.1);
+		transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+	}
+
+		.btn-fav i {
+			font-size: 1.4rem;
+		}
+
+		.btn-fav:hover {
+			background-color: #e63946;
+			color: #fff;
+			box-shadow: 0 0 10px rgba(230, 57, 70, 0.8);
+		}
+
+</style>

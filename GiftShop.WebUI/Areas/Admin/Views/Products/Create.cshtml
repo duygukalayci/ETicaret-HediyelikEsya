@@ -1,0 +1,106 @@
+﻿@model GiftShop.WebUI.ViewModels.ProductViewModel
+
+@{
+    ViewData["Title"] = "Ürün Ekle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>Ürün Bilgileri</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Product.Name" class="control-label"></label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Product.Description" class="control-label"></label>
+                <textarea asp-for="Product.Description" class="form-control"></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label>Ürün Görseli</label>
+                <input type="file" name="Image" class="form-control" />
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Product.Stock" class="control-label"></label>
+                <input asp-for="Product.Stock" class="form-control" />
+                <span asp-validation-for="Product.Stock" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Product.IsActive" class="control-label"></label>
+                <input asp-for="Product.IsActive" class="form-check-input" />
+				<span asp-validation-for="Product.IsActive" class="text-danger"></span>
+			</div>
+
+
+            <!-- Üst Kategori Dropdown -->
+            <div class="form-group mb-3">
+                <label>Üst Kategori</label>
+                <select id="ParentCategory" name="SelectedParentCategoryID" class="form-control">
+                    <option value="">Üst Kategori Seçiniz</option>
+                    @foreach (var item in Model.ParentCategories)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Alt Kategori Dropdown -->
+            <div class="form-group mb-3">
+                <label>Alt Kategori</label>
+                <select id="SubCategory" name="Product.CategoryID" class="form-control">
+                    <option value="">Alt Kategori Seçiniz</option>
+                </select>
+            </div>
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Listeye Dön</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ParentCategory').change(function () {
+                var parentId = $(this).val();
+                if (parentId === "") {
+                    $('#SubCategory').empty().append($('<option>').val('').text('Alt Kategori Seçiniz'));
+                    return;
+                }
+                $.ajax({
+                    url: '@Url.Action("GetSubCategories", "Products", new { area = "Admin" })',
+                    type: 'GET',
+                    data: { parentId: parentId },
+                    success: function (data) {
+                        var $subCategory = $('#SubCategory');
+                        $subCategory.empty();
+                        $subCategory.append($('<option>').val('').text('Alt Kategori Seçiniz'));
+                        $.each(data, function (i, item) {
+                            $subCategory.append($('<option>').val(item.value).text(item.text));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

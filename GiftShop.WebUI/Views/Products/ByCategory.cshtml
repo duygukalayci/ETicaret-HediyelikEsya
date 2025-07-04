@@ -1,0 +1,22 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "ByCategory";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+<h2>@ViewBag.CategoryName Kategorisine Ait Ürünler</h2>
+
+@if (!Model.Any())
+{
+    <p>Bu kategoriye ait ürün bulunmamaktadır.</p>
+}
+else
+{
+    <ul>
+        @foreach (var product in Model)
+        {
+            <li>@product.Name</li>
+        }
+    </ul>
+}
+
+
