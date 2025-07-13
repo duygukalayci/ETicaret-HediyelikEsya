@@ -7,6 +7,7 @@
 Yönetici paneli ise siteyi yöneten kişilere ürünlerin eklenmesi, güncellenmesi, silinmesi, kategorilerin yönetimi, kullanıcı siparişlerinin takibi ve durumu güncelleme ve daha birçok işlem sunar.
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  👥KULLANICI ÖZELLİKLERİ
+ 
 -Ürün Kataloğu: Kullanıcılar siteye girerek tüm hediyelik ürünleri kategori ve alt kategori bazında listeleyebilir,arama yapabilirler.
 
 
@@ -60,25 +61,21 @@ Yönetici paneli ise siteyi yöneten kişilere ürünlerin eklenmesi, güncellen
 📸PROJEMDEN BAZI GÖRSELLER
 
 
-<img width="1920" height="1080" alt="Ekran Görüntüsü (14)" src="https://github.com/user-attachments/assets/9e68d26a-f286-4dfa-bdbd-aaca9849d71a" />
+<img width="1920" height="998" alt="Ekran Görüntüsü (14)" src="https://github.com/user-attachments/assets/b0f77f5b-b9ac-4381-8c7f-357b80c13053" />
+<img width="1915" height="983" alt="Ekran Görüntüsü (8)" src="https://github.com/user-attachments/assets/144e1a49-58a9-4749-a7d4-ca19792480c5" />
+<img width="1920" height="975" alt="Ekran Görüntüsü (9)" src="https://github.com/user-attachments/assets/4fffd43c-d5a3-48bc-82eb-5d79e0b02c85" />
+<img width="1920" height="981" alt="Ekran Görüntüsü (10)" src="https://github.com/user-attachments/assets/29c1f502-259e-4f65-8471-ab3e1d47ea82" />
+<img width="1920" height="986" alt="Ekran Görüntüsü (11)" src="https://github.com/user-attachments/assets/74638d13-6009-41d5-bd8f-ee2bdfe47284" />
+<img width="1920" height="1006" alt="Ekran Görüntüsü (13)" src="https://github.com/user-attachments/assets/fee57633-d6a9-46e5-b769-b7daf58f51ad" />
 
-<img width="1920" height="1080" alt="Ekran Görüntüsü (8)" src="https://github.com/user-attachments/assets/2225d552-aa25-462b-8068-fce39cffa53e" />
+<img width="1920" height="1006" alt="Ekran Görüntüsü (13)" src="https://github.com/user-attachments/assets/4cc7ae58-1a66-4fb7-a243-4841e63d8296" />
+<img width="1920" height="988" alt="Ekran Görüntüsü (16)" src="https://github.com/user-attachments/assets/dd8daaf8-e469-49d0-9e59-57a093974018" />
+<img width="1920" height="978" alt="Ekran Görüntüsü (17)" src="https://github.com/user-attachments/assets/14df963e-74e1-4b42-878b-c35a37d37f58" />
+<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/8c4d0ae7-4c54-4e38-9120-56283e9fde93" />
 
-<img width="1920" height="1080" alt="Ekran Görüntüsü (9)" src="https://github.com/user-attachments/assets/d316b140-ac35-469e-9a6c-cff415df6aff" />
-<img width="1920" height="1080" alt="Ekran Görüntüsü (10)" src="https://github.com/user-attachments/assets/fe7845be-30ad-458c-99f8-35dd38e2a39b" />
+<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/04a01825-70c2-4c34-86cc-92529944498c" />
 
-<img width="1920" height="1080" alt="Ekran Görüntüsü (11)" src="https://github.com/user-attachments/assets/60da41c8-b15b-4750-96d3-bb893b6770ff" />
-
-<img width="1920" height="1080" alt="Ekran Görüntüsü (15)" src="https://github.com/user-attachments/assets/db833dfc-15b4-4d70-b919-da0bed6f1eb1" />
-<img width="1920" height="1080" alt="Ekran Görüntüsü (16)" src="https://github.com/user-attachments/assets/3e169d1b-1af7-48f3-881a-cae691d347b9" />
-
-
-<img width="1920" height="1080" alt="Ekran Görüntüsü (17)" src="https://github.com/user-attachments/assets/f7c0b480-91f1-406d-a191-739053fc9ca7" />
-<img width="1920" height="1080" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/2da7855b-06a1-428d-841f-84ec64b66911" />
-
-<img width="1920" height="1080" alt="Ekran Görüntüsü (19)" src="https://github.com/user-attachments/assets/6d9662d6-eccb-4d4f-9986-930238fbb8f8" />
-<img width="1920" height="1080" alt="Ekran Görüntüsü (20)" src="https://github.com/user-attachments/assets/c1f88586-9054-4fb5-bd55-26386d61f4ad" />
-
-<img width="1920" height="1080" alt="Ekran Görüntüsü (21)" src="https://github.com/user-attachments/assets/1748772e-ec44-43a7-a694-0e8194a4a14d" />
-<img width="1920" height="1080" alt="Ekran Görüntüsü (22)" src="https://github.com/user-attachments/assets/be52826a-fccb-40d6-882d-e80b79cf2e00" />
-<img width="1920" height="1080" alt="Ekran Görüntüsü (23)" src="https://github.com/user-attachments/assets/b3c3b610-6107-41f3-a7db-d5f77ca69ee2" />
+<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/4f649214-0d3c-4c67-bcb2-1a42dfda71dd" />
+<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/1fac7804-ffa2-41fe-bfe7-380cc904c8a2" />
+<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/3b4997b8-b6ef-487c-907e-a16420a78414" />
+<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/ef057df5-eef5-4030-9441-4bd85a07c951" />
