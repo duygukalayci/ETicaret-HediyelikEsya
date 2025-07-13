@@ -8,14 +8,23 @@ Yönetici paneli ise siteyi yöneten kişilere ürünlerin eklenmesi, güncellen
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  👥KULLANICI ÖZELLİKLERİ
 -Ürün Kataloğu: Kullanıcılar siteye girerek tüm hediyelik ürünleri kategori ve alt kategori bazında listeleyebilir,arama yapabilirler.
+
+
 -Ürün Detay Sayfası: Her ürün için detaylı bilgi (isim, açıklama, fiyat, ürün görselleri) sunulur.
+
 -Sepet : Kullanıcılar ürünleri sepete ekleyebilir, adetlerini güncelleyebilir veya sepetten çıkarabilirler.
+
 -Favaoriler: Kullanıcılar ürünleri favorilere  ekleyebilir, favoriledikleri ürünü sepete ekleyebilir veya kaldırabiliriler.
+
 -Kullanıcı Kayıt ve Giriş: Yeni kullanıcılar hesap oluşturabilir, mevcut kullanıcılar güvenli bir şekilde sisteme giriş yapabilir,üye kullanıcılar sipariş verebilir.
+
 -Sipariş Oluşturma: Üye Kullanıcılar sepetteki ürünlerle sipariş verebilir, adres ve ödeme bilgilerini girebilirler.
+
 -Sipariş Takibi: Kullanıcılar verdikleri siparişlerin durumunu (hazırlanıyor, kargoda, teslim edildi vb.) siparişlerim sayfasından  görüntüleyebilirler.
 -İletişim: Kullanıcılar iletişim kısmından yönetim paneline istek,soru,öneri,şikayetlerini gönderebilirler.
+
 -Adreslerim: Kullanıcılar adreslerim sayfasından adreslerini görüntüleyebilir,birden fazla adres ekleyebilir,güncelleyebilir,silebilir.Adres girilmeden ödeme alınamaz.
+
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 👤ADMİN PANELİ
 
