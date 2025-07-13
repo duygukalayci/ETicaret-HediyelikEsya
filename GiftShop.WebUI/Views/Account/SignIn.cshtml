@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Giriş";
-    Layout = "~/Views/Shared/_siteLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <style>
@@ -72,20 +72,52 @@
         height: 18px;
     }
 
+    .forgot-link {
+        font-size: 16px;
+        color: black;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .forgot-link:hover {
+            color: #0a58ca;
+            text-decoration: underline;
+            transform: scale(1.02);
+    }
 </style>
+@* @{
+    var returnUrl = Context.Request.Query["ReturnUrl"].ToString();
+}
+
+@if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("CheckOut"))
+{
+    <p class="text-center text-danger">
+        Sipariş oluşturmak, siparişinizi takip etmek için lütfen sisteme giriş yapınız.
+    </p>
+    <hr />
+}
+ *@
+
 
 <div class="login-container">
-    <form asp-action="SignIn" method="post" class="login-form">
-     @*    @if (!ViewData.ModelState.IsValid)
-        {
-            foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-            {
-                <div class="alert alert-danger">@error.ErrorMessage</div>
-            }
-        } *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
+
+    <form asp-action="SignIn" method="post" class="login-form">
+@*         <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+ *@
         <img src="/giftshopunklasörü/glowing-master/assets/images/2.png" alt="Logo" />
         <h1>Üye Girişi</h1>
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
 
         <input asp-for="Email" class="form-control" placeholder="Email adresiniz" />
         <span asp-validation-for="Email" class="text-danger"></span>
@@ -97,12 +129,27 @@
             <input asp-for="RememberMe" class="form-check-input" />
             <label asp-for="RememberMe" class="form-check-label"></label>
         </div>
-
+        <br />
         <button type="submit" class="btn btn-primary">Giriş Yap</button>
+        <br />
+        <div class="text-center mt-3">
+            <a href="/Account/SignUp" class="btn btn-outline-secondary btn-sm">Hesabınız yok mu? Kayıt Olun</a>
+        </div>
+        <div class="text-center mt-2">
+            <a href="/Account/PasswordRenew" class="forgot-link">
+                🔒 Şifrenizi mi unuttunuz?
+            </a>
+        </div>
+
 
         <p class="text-muted">© 2025 HediyeStore</p>
     </form>
+
 </div>
+
+
+<hr />
+
 
 @section Scripts {
     @{

@@ -17,35 +17,34 @@ namespace GiftShop.Data.Configurations
 
             builder.Property(x => x.Name)
                 .IsRequired()
-                .HasColumnType("varchar(50)")
-                .HasMaxLength(50);
+                .HasMaxLength(50)
+                .HasColumnType("varchar(50)");
 
             builder.Property(x => x.Surname)
-                .HasColumnType("varchar(50)")
-                .HasMaxLength(50);
+                .HasMaxLength(50)
+                .HasColumnType("varchar(50)");
 
             builder.Property(x => x.Email)
                 .IsRequired()
-                .HasColumnType("varchar(50)")
-                .HasMaxLength(50);
+                .HasMaxLength(50)
+                .HasColumnType("varchar(50)");
 
             builder.Property(x => x.Phone)
                 .IsRequired()
-                .HasColumnType("varchar(15)")
-                .HasMaxLength(15);
+                .HasMaxLength(11) // Modelde 11 haneli olduğu belirtilmişti
+                .HasColumnType("varchar(11)");
 
             builder.Property(x => x.Password)
                 .IsRequired()
-                .HasColumnType("nvarchar(50)")
-                .HasMaxLength(50);
+                .HasMaxLength(50)
+                .HasColumnType("nvarchar(50)");
 
             builder.Property(x => x.UserName)
                 .IsRequired()
-                .HasColumnType("varchar(50)")
-                .HasMaxLength(50);
+                .HasMaxLength(30) // Modelde [StringLength(30)]
+                .HasColumnType("varchar(30)");
 
-
-            //Bu satır sayesinde migration ile veritabanı oluştuğunda AppUser tablosunda otomatik bu kullanıcı olur.Genellikle admin kullanıcıyı otomatik eklemek için kullanılır.
+            // Örnek kullanıcı (admin)
             builder.HasData(new AppUser
             {
                 AppUserID = 1,
@@ -53,10 +52,10 @@ namespace GiftShop.Data.Configurations
                 Surname = "User",
                 Email = "admineticaret@gmail.com",
                 Password = "123",
-                Phone = "1234567890",
-                UserName = "Admin"
-            }
-            );
+                Phone = "12345678901", // 11 hane olmalı
+                UserName = "Admin",
+                IsAdmin = true
+            });
         }
     }
 }

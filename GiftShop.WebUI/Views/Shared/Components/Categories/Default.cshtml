@@ -142,7 +142,7 @@
             var hasSub = altKategoriler.Any();
             var menuId = $"menu-{anaKategori.CategoryID}";
             <li class="menu-item @(hasSub ? "has-submenu" : "")" role="none">
-                <a href="@(hasSub ? "#" : Url.Action("Index", "Products", new { categoryId = anaKategori.CategoryID }))"
+                <a href="@Url.Action("Index", "Products", new { categoryId = anaKategori.CategoryID })"
                    class="navbar-link"
                    aria-haspopup="@(hasSub.ToString().ToLower())"
                    aria-expanded="false"

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<GiftShop.Entity.Entities.ProductImage>
+
+@{
+    ViewData["Title"] = "Ürün Resimleri";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-primary">
+        <i class="fa-solid fa-plus"></i> Yeni Ürün Resmi Ekle
+    </a>
+</p>
+<table class="table table-bordered table-striped align-middle text-center" id="datatablesSimple">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Alt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alt)
+            </td>
+                <td>
+                    <img src="~/Img/@item.ImageUrl" alt="@item.Alt" style="max-width: 150px; height: auto;" class="img-thumbnail" />
+                </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                    <a class="btn btn-sm btn-warning" asp-area="Admin" asp-action="Edit" asp-route-id="@item.ProductImageID"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a class="btn btn-sm btn-info" asp-area="Admin" asp-action="Details" asp-route-id="@item.ProductImageID"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <a class="btn btn-sm btn-danger" asp-area="Admin" asp-action="Delete" asp-route-id="@item.ProductImageID"><i class="fa-solid fa-trash"></i></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/demo/chart-bar-demo.js"></script>
+    <script src="~/lib/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/demo/datatables-demo.js"></script>
+}

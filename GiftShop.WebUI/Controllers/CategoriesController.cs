@@ -15,8 +15,7 @@ namespace GiftShop.WebUI.Controllers
         {
             _service = service;
         }
-
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> IndexAsync(int? id)
         {
             if (id == null)
             {

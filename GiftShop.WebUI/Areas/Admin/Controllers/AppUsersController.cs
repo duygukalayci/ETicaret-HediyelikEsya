@@ -151,7 +151,7 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        
         private bool AppUserExists(int id)
         {
             return _context.AppUsers.Any(e => e.AppUserID == id);

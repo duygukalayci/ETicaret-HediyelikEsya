@@ -1,4 +1,7 @@
 ﻿@using GiftShop.WebUI.ExtensionMethods
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using System.Linq
+
 
 <style>
 	.header-actions {
@@ -98,6 +101,27 @@
 			text-align: center;
 			margin-top: 15px;
 	}
+
+	.cart-badge {
+		position: absolute;
+		top: -6px;
+		right: -6px;
+		background: black; /* Siyah arka plan */
+		color: white; /* Beyaz yazı */
+		font-size: 10px; /* Daha küçük font */
+		padding: 2px 5px; /* Daha az padding, yatayda biraz geniş */
+		border-radius: 12px; /* Daha yuvarlak köşeler */
+		font-weight: bold;
+		min-width: 18px; /* Minimum genişlik, dairesel görünüm için */
+		height: 18px; /* Yükseklik sabit */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-sizing: border-box;
+	}
+
+
+
 </style>
 
 <header class="header">
@@ -118,7 +142,7 @@
 			</button>
 
 			<form method="get" action="/Products/Search" class="input-wrapper">
-				<input type="search" name="q" placeholder="Search product" class="search-field" />
+				<input type="search" name="q" placeholder="Ürün Ara" class="search-field" />
 				<button type="submit" class="search-submit" aria-label="search">
 					<ion-icon name="search-outline" aria-hidden="true"></ion-icon>
 				</button>
@@ -143,21 +167,12 @@
 
 					<div id="userMenu" class="dropdown-menu">
 						<a href="/Account/Profile/">Kullanıcı Bilgilerim</a>
-						<a href="/Account/Edit/">Siparişlerim</a>
-						<a href="/Account/">Değerlendirmelerim</a>
+						<a href="/MyAddresses/">Kayıtlı Adreslerim</a>
+						<a href="/Account/MyOrders/">Siparişlerim</a>
 						<a href="/Account/SignOut/">Oturumu Kapat</a>
 					</div>
 
-			@* 		<div class="position-relative">
-						<button class="header-action-btn" id="cartToggleBtn" aria-label="cart item" style="color: black;">
-							<ion-icon name="bag-handle-outline" style="font-size: 26px;"></ion-icon>
-						</button>
-
-						<div id="cartDropdown" class="cart-dropdown-menu">
-							@await Component.InvokeAsync("Cart")
-						</div>
-					</div>
- *@
+			
 
 
 				}
@@ -173,6 +188,63 @@
 					</div>
 
 				}
+
+				@{
+					var cart = HttpContextAccessor.HttpContext.Session.GetJson<GiftShop.Business.Concrete.CartService>("Cart") ?? new GiftShop.Business.Concrete.CartService();
+					var cartLines = cart.CartLines;
+					int itemCount = cartLines.Sum(x => x.Quantity); // toplam ürün adedi
+					decimal totalPrice = cart.TotalPrice();
+				}
+				<div class="dropdown" style="position: relative;">
+					@{
+						var cartLine = HttpContextAccessor.HttpContext.Session.GetJson<CartLine>("Cart") ?? new CartLine();
+						var cartLines1 = cart.CartLines;
+						var cartCount = cartLines.Sum(x => x.Quantity);
+						var total = cart.TotalPrice();
+					}
+					<button id="cartToggleBtn" class="header-action-btn" aria-label="cart" type="button" style="position: relative;">
+						<ion-icon name="bag-handle-outline" style="font-size: 24px;"></ion-icon>
+
+						@if (cartCount > 0)
+						{
+							<span class="cart-badge">@cartCount</span>
+						}
+					</button>
+
+
+					<div id="cartDropdown" class="cart-dropdown-menu" style="display: none;">
+						@if (!cartLines.Any())
+						{
+							<p>Sepetiniz boş.</p>
+						}
+						else
+						{
+							<ul style="list-style:none; padding:0; margin:0; max-height:300px; overflow-y:auto;">
+								@foreach (var line in cartLines)
+								{
+									<li style="display:flex; align-items:center; justify-content: space-between; margin-bottom: 10px;">
+										<img src="/Img/@line.Product.ImageUrl" alt="@line.Product.Name" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;" />
+										<div style="flex:1;">
+											<strong>@line.Product.Name</strong><br />
+											Adet: @line.Quantity
+										</div>
+										<span>@((line.Product.Price* line.Quantity).ToString("C"))</span>
+									</li>
+								}
+							</ul>
+							<hr />
+							<div class="d-flex justify-content-between fw-bold fs-5" style="padding: 0 10px;">
+								<span>Toplam:</span>
+								<span>@totalPrice.ToString("C")</span>
+							</div>
+							<a href="/Cart" class="btn" style="background-color: #6c757d; color: white; width: 100%;">Sepete Git</a>
+						}
+					</div>
+				</div>
+
+	
+
+
 				@{
 					var favorites = Context.Session.GetJson<List<GiftShop.Entity.Entities.Product>>("GetFavorites") ?? new List<GiftShop.Entity.Entities.Product>();
 					var favCount = favorites.Count;
@@ -197,7 +269,7 @@
 						<a href="/Home/ContactUs/" class="navbar-link has-after">İletişim</a>
 					</li>
 					<li>
-						<a href="#blog" class="navbar-link has-after">Blog</a>
+						<a href="/Home/Blog" class="navbar-link has-after">Blog</a>
 					</li>
 				</ul>
 			</nav>

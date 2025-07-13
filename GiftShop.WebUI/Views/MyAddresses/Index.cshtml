@@ -1,0 +1,59 @@
+﻿@model IEnumerable<GiftShop.Entity.Entities.Address>
+
+@{
+    ViewData["Title"] = "Adreslerim";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<h2 class="my-4 text-center fw-bold" style="letter-spacing: 1px;">Adreslerim</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-controller="MyAddresses" asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Yeni Adres Ekle
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning text-center">Henüz kayıtlı adresiniz yok.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Başlık</th>
+                    <th>Şehir</th>
+                    <th>İlçe</th>
+                    <th>Açık Adres</th>
+                    <th>Aktif</th>
+                    <th>Fatura Adresi</th>
+                    <th>Teslimat Adresi</th>
+                    <th class="text-center">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.City</td>
+                        <td>@item.Disctrict</td>
+                        <td>@item.OpenAddress</td>
+                        <td>@(item.IsActive ? "✓" : "—")</td>
+                        <td>@(item.IsBillingAddress ? "✓" : "—")</td>
+                        <td>@(item.IsDeliveryAddress ? "✓" : "—")</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary me-1">Düzenle</a>
+                            
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                                Sil
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

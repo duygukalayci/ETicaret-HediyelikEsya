@@ -4,28 +4,27 @@ namespace GiftShop.WebUI.Utils
 {
     public class FileHelper
     {
-        public static async Task<string> UploadFileAsync(IFormFile FormFile, string filePath="/Img/")
+        public static async Task<string> UploadFileAsync(IFormFile FormFile, string filePath = "/Img/")
         {
+            if (FormFile == null || FormFile.Length == 0)
+                return "";
 
-            string fileName = "";
-            if(FormFile!=null&&FormFile.Length>0)
-            {
-                fileName = FormFile.FileName.ToLower();
-                string directory=Directory.GetCurrentDirectory() + "/wwwroot"+filePath+fileName;
-                using var stream = new FileStream(directory, FileMode.Create);
-                {
-                    await FormFile.CopyToAsync(stream);
-                } 
+            string extension = Path.GetExtension(FormFile.FileName);
+            string fileName = Guid.NewGuid().ToString() + extension;
 
-            }
+            string directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath.Trim('/'), fileName);
+
+            using var stream = new FileStream(directory, FileMode.Create);
+            await FormFile.CopyToAsync(stream);
+
             return fileName;
-
         }
+
 
         public static bool FileRemover(string FileName, string filePath = "/Img/")
         {
-            
-            string directory = Directory.GetCurrentDirectory() + "/wwwroot" + filePath + FileName;
+
+            string directory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filePath.Trim('/'), FileName);
             if (File.Exists(directory))
             {
                 File.Delete(directory);

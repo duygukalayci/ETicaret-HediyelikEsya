@@ -24,10 +24,11 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
         }
 
         // GET: Admin/OrderDetails
-        public async Task<IActionResult> Index(int? orderId)
+        public async Task<IActionResult> Index(int? orderId, string? customerName)
         {
             var query = _context.OrderDetails
                 .Include(od => od.Order)
+                    .ThenInclude(o => o.AppUser)
                 .Include(od => od.Product)
                 .AsQueryable();
 
@@ -36,9 +37,16 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
                 query = query.Where(od => od.OrderID == orderId);
             }
 
+            if (!string.IsNullOrEmpty(customerName))
+            {
+                query = query.Where(od =>
+                    (od.Order.AppUser.Name + " " + od.Order.AppUser.Surname).Contains(customerName));
+            }
+
             var result = await query.ToListAsync();
             return View(result);
         }
+
 
         // GET: Admin/OrderDetails/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -1,0 +1,33 @@
+﻿@model GiftShop.Entity.Entities.Address
+
+@{
+    ViewData["Title"] = "Adres Sil";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-sm border-0" style="max-width: 600px; width: 100%;">
+        <div class="card-body">
+            <h4 class="text-center text-danger mb-4">
+                Adresi Silmek Üzeresiniz
+            </h4>
+
+            <p class="text-center mb-4">
+                <strong class="text-dark">"@Model.Title"</strong> başlıklı adresi silmek üzeresiniz.<br />
+                Bu işlem geri alınamaz. Devam etmek istiyor musunuz?
+            </p>
+
+            <div class="border rounded p-3 bg-light mb-4">
+                <p class="mb-1"><strong>Şehir:</strong> @Model.City</p>
+                <p class="mb-1"><strong>İlçe:</strong> @Model.Disctrict</p>
+                <p class="mb-0"><strong>Açık Adres:</strong> @Model.OpenAddress</p>
+            </div>
+
+            <form asp-action="Delete" method="post" class="d-flex justify-content-between">
+                <input type="hidden" asp-for="Id" />
+                <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                <button type="submit" class="btn btn-danger">Sil</button>
+            </form>
+        </div>
+    </div>
+</div>

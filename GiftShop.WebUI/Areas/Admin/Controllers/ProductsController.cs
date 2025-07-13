@@ -177,7 +177,7 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product, IFormFile? Image, bool cbResmiSil = false, int? selectedParentCategoryID = null)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductID,Name,Description,Price,Stock,IsActive,CategoryID,ImageUrl")] Product product, IFormFile? Image, bool cbResmiSil = false, int? selectedParentCategoryID = null)
         {
             Console.WriteLine($"selectedParentCategoryID: {selectedParentCategoryID}");
             Console.WriteLine($"product.CategoryID: {product.CategoryID}");
@@ -186,17 +186,21 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
 
             if (cbResmiSil && !string.IsNullOrEmpty(product.ImageUrl))
             {
+                // Eski dosyayı sil
                 FileHelper.FileRemover(product.ImageUrl, "/Img/");
-                product.ImageUrl = null;
+                product.ImageUrl = null;  // Modeldeki URL'yi temizle
             }
 
-            if (Image != null)
+            if (Image != null && Image.Length > 0)
             {
+                // Yeni dosya yüklenmişse, önce eski dosya varsa sil (sil checkboxı işaretli olmasa bile)
+                if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    FileHelper.FileRemover(product.ImageUrl, "/Img/");
+                }
+
                 product.ImageUrl = await FileHelper.UploadFileAsync(Image, "/Img/");
             }
-
-            // Burada product.CategoryID zaten formdan gelen alt kategori seçimi olmalı
-            // selectedParentCategoryID sadece dropdown seçimi için kullanılır, zorunlu değil
 
             if (ModelState.IsValid)
             {
@@ -214,7 +218,6 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
                         throw;
                 }
             }
-
             // Dropdownları yeniden yükle (hata durumunda)
             var parentCategoryId = selectedParentCategoryID;
 
@@ -271,17 +274,16 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
             {
                 if (!string.IsNullOrEmpty(product.ImageUrl))
                 {
-                    FileHelper.FileRemover(product.ImageUrl);
-
+                    bool deleted = FileHelper.FileRemover(product.ImageUrl);
+                    if (!deleted)
+                    {
+                        // Logla veya kullanıcıya bilgi ver
+                    }
                 }
                 _context.Products.Remove(product);
-                if (product != null)
-                {
-                    _context.Products.Remove(product);
-                }
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

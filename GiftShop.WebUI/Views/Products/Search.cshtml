@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model IEnumerable<GiftShop.Entity.Entities.Product>
 
 @{
     ViewData["Title"] = "Arama Sonuçları";
@@ -19,6 +19,7 @@ else
             <div class="col mb-5">
                 <div class="card h-100 position-relative">
                     <form asp-controller="Favorites" asp-action="Add" method="post" class="favorite-icon-form">
+                            @Html.AntiForgeryToken()
                         <input type="hidden" name="productId" value="@product.ProductID" />
                         <button type="submit" class="btn btn-fav" title="Favorilere Ekle">
                             <i class="bi bi-heart"></i>

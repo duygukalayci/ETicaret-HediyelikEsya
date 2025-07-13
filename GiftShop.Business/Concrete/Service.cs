@@ -97,7 +97,7 @@ namespace GiftShop.Business.Concrete
             return await _context.SaveChangesAsync();
         }
 
-      
+
         public void Update(T entity)
         {
             _dbSet.Update(entity);
@@ -111,12 +111,14 @@ namespace GiftShop.Business.Concrete
 
         public int saveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges();
         }
 
-        public Task GetAsync(Func<object, bool> value)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression)
         {
-            throw new NotImplementedException();
+            return await _dbSet.FirstOrDefaultAsync(expression);
+
         }
+
     }
 }

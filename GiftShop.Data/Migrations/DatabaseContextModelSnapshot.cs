@@ -22,6 +22,58 @@ namespace GiftShop.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GiftShop.Entity.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid?>("AddressGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("AppUserID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Disctrict")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsBillingAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeliveryAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OpenAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("GiftShop.Entity.Entities.AppUser", b =>
                 {
                     b.Property<int>("AppUserID")
@@ -35,7 +87,7 @@ namespace GiftShop.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool?>("IsAdmin")
+                    b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -71,6 +123,7 @@ namespace GiftShop.Data.Migrations
                         {
                             AppUserID = 1,
                             Email = "admineticaret@gmail.com",
+                            IsAdmin = false,
                             Name = "Test",
                             Password = "123",
                             Phone = "1234567890",
@@ -179,13 +232,20 @@ namespace GiftShop.Data.Migrations
                     b.Property<int>("AppUserID")
                         .HasColumnType("int");
 
+                    b.Property<string>("BillingAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("OrderDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
@@ -280,39 +340,33 @@ namespace GiftShop.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("GiftShop.Entity.Entities.Shipment", b =>
+            modelBuilder.Entity("GiftShop.Entity.Entities.ProductImage", b =>
                 {
-                    b.Property<int>("ShipmentID")
+                    b.Property<int>("ProductImageID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShipmentID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductImageID"));
 
-                    b.Property<string>("Carrier")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("Alt")
+                        .HasMaxLength(240)
+                        .HasColumnType("nvarchar(240)");
 
-                    b.Property<DateTime?>("DeliveredDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderID")
+                    b.Property<string>("Name")
+                        .HasMaxLength(240)
+                        .HasColumnType("nvarchar(240)");
+
+                    b.Property<int?>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ShippedDate")
-                        .HasColumnType("datetime");
+                    b.HasKey("ProductImageID");
 
-                    b.Property<string>("TrackingNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.HasIndex("ProductID");
 
-                    b.HasKey("ShipmentID");
-
-                    b.HasIndex("OrderID")
-                        .IsUnique();
-
-                    b.ToTable("Shipments");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("GiftShop.Entity.Entities.Slider", b =>
@@ -335,6 +389,15 @@ namespace GiftShop.Data.Migrations
                     b.HasKey("SliderID");
 
                     b.ToTable("Sliders");
+                });
+
+            modelBuilder.Entity("GiftShop.Entity.Entities.Address", b =>
+                {
+                    b.HasOne("GiftShop.Entity.Entities.AppUser", "AppUser")
+                        .WithMany("Addresses")
+                        .HasForeignKey("AppUserID");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("GiftShop.Entity.Entities.Category", b =>
@@ -387,19 +450,19 @@ namespace GiftShop.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("GiftShop.Entity.Entities.Shipment", b =>
+            modelBuilder.Entity("GiftShop.Entity.Entities.ProductImage", b =>
                 {
-                    b.HasOne("GiftShop.Entity.Entities.Order", "Order")
-                        .WithOne("Shipment")
-                        .HasForeignKey("GiftShop.Entity.Entities.Shipment", "OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("GiftShop.Entity.Entities.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductID");
 
-                    b.Navigation("Order");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("GiftShop.Entity.Entities.AppUser", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Orders");
                 });
 
@@ -413,14 +476,13 @@ namespace GiftShop.Data.Migrations
             modelBuilder.Entity("GiftShop.Entity.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("Shipment")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("GiftShop.Entity.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

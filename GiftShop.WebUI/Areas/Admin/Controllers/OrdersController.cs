@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GiftShop.WebUI.Areas.Admin.Controllers
 {
@@ -82,7 +78,8 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
 
             if (order == null) return NotFound();
 
-            LoadStatusList(); // Sipariş durumları listesi
+            LoadStatusList(order.Status);
+            // Sipariş durumları listesi
             return View(order);
         }
         // POST: Admin/Orders/Edit/5
@@ -93,52 +90,24 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
             if (id != updatedOrder.OrderID)
                 return NotFound();
 
-            if (!ModelState.IsValid)
-            {
-                // ModelState hataları varsa, veritabanından tam order verisini tekrar al
-                var orderFull = await _context.Orders
-                    .Include(o => o.AppUser)
-                    .Include(o => o.OrderDetails)
-                    .FirstOrDefaultAsync(o => o.OrderID == id);
+            var existingOrder = await _context.Orders.FindAsync(id);
+            if (existingOrder == null) return NotFound();
 
-                // Hata varsa konsola yazdır (isteğe bağlı)
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                foreach (var error in errors)
-                {
-                    Console.WriteLine(error);
-                }
-
-                LoadStatusList();
-                return View(orderFull);
-            }
+            existingOrder.Status = updatedOrder.Status;
 
             try
             {
-                var existingOrder = await _context.Orders.FindAsync(id);
-                if (existingOrder == null) return NotFound();
-
-                existingOrder.Status = updatedOrder.Status;
-
-                Console.WriteLine($"Güncellemeden önce Status: {existingOrder.Status}");
-                existingOrder.Status = updatedOrder.Status;
-                Console.WriteLine($"Güncellemeden sonra Status: {existingOrder.Status}");
                 await _context.SaveChangesAsync();
-
                 TempData["SuccessMessage"] = "Sipariş durumu başarıyla güncellendi.";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "Güncelleme sırasında hata oluştu: " + ex.Message);
-
-                var orderFull = await _context.Orders
-                    .Include(o => o.AppUser)
-                    .Include(o => o.OrderDetails)
-                    .FirstOrDefaultAsync(o => o.OrderID == id);
-
-                LoadStatusList();
-                return View(orderFull);
             }
+
+            LoadStatusList(existingOrder.Status);
+            return View(existingOrder);
         }
 
 
@@ -172,16 +141,18 @@ namespace GiftShop.WebUI.Areas.Admin.Controllers
         }
 
         // Sipariş durumu seçenekleri
-        private void LoadStatusList()
+        private void LoadStatusList(string selectedStatus = null)
         {
-            ViewData["StatusList"] = new List<SelectListItem>
+            ViewData["StatusList"] = new SelectList(new[]
             {
-                new SelectListItem { Text = "Hazırlanıyor", Value = "Hazırlanıyor" },
-                new SelectListItem { Text = "Gönderildi", Value = "Gönderildi" },
-                new SelectListItem { Text = "Teslim Edildi", Value = "Teslim Edildi" },
-                new SelectListItem { Text = "İptal Edildi", Value = "İptal Edildi" }
-            };
+                "Yeni",
+                "Hazırlanıyor",
+                "Kargoya Verildi",
+                "Teslim Edildi",
+                "İptal Edildi"
+            }, selectedStatus);
         }
+
 
         // Sipariş var mı kontrolü
         private bool OrderExists(int id)

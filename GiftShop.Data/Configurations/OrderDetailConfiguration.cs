@@ -25,9 +25,13 @@ namespace GiftShop.Data.Configurations
 
             builder.Property(od => od.TotalAmount)
                 .HasColumnType("decimal(18,2)")
-                .HasComputedColumnSql("[Quantity] * [UnitPrice]", stored: true); 
+                .HasComputedColumnSql("[Quantity] * [UnitPrice]", stored: true);
 
-
+            // Doğru ilişki tanımı
+            builder.HasOne(od => od.Order)    // OrderDetail'den Order'a bire çok ilişki
+                .WithMany(o => o.OrderDetails)
+                .HasForeignKey(od => od.OrderID)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

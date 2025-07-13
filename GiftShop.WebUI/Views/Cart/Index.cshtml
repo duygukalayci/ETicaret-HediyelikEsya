@@ -1,0 +1,89 @@
+﻿@model GiftShop.WebUI.Models.CartViewModel
+
+@{
+    ViewData["Title"] = "Sepetim";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+
+    // Kargo ücreti: 500 üstü ücretsiz, değilse 30 TL
+    decimal shippingCost = Model.TotalPrice >= 500 ? 0 : 30;
+    decimal grandTotal = Model.TotalPrice + shippingCost;
+}
+<h2 class="text-center my-4 fw-bold " style="letter-spacing: 2px; color: #dc3545 ;">
+    <i class="bi bi-cart3 me-2"></i> SEPETİM
+</h2>
+
+<section class="container my-5">
+    <div class="row justify-content-center align-items-start">
+        <!-- Ürün listesi (sol sütun) -->
+        <div class="col-md-8">
+            <table class="table table-hover" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Ürün</th>
+                        <th>Adet</th>
+                        <th>Birim Fiyat</th>
+                        <th>Toplam</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartLines)
+                    {
+                        <tr>
+                            <td>
+                                <img src="/Img/@item.Product.ImageUrl" alt="@item.Product.Name" style="height: 37px; width: auto;" />
+                            </td>
+                            <td>
+                                <a href="/Products/Details/@item.Product.ProductID">@item.Product.Name</a>
+                            </td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Product.Price.ToString("C")</td>
+                            <td>@((item.Product.Price* item.Quantity).ToString("C"))</td>
+                            <td>
+                                <form asp-action="Remove" asp-controller="Cart" method="post" style="display:inline;">
+                                    <input type="hidden" name="ProductID" value="@item.Product.ProductID" />
+                                    <button type="submit" class="btn btn-sm btn-danger" title="Sepetten Kaldır">Kaldır</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="4" class="text-end fw-bold">Toplam:</td>
+                        <td colspan="2" class="fw-bold">@Model.TotalPrice.ToString("C")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+		<br />
+        <!-- Sepet Özeti (sağ sütun) -->
+        <div class="col-md-4">
+            <div class="card p-4 shadow-sm">
+                <h4 class="mb-3">Sepet Özeti</h4>
+                <div class="d-flex justify-content-between">
+                    <span>Ara Toplam</span>
+                    <span>@Model.TotalPrice.ToString("C")</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Kargo Ücreti</span>
+                    <span>@(shippingCost == 0 ? "Ücretsiz" : shippingCost.ToString("C"))</span>
+                </div>
+                <hr />
+                <div class="d-flex justify-content-between fw-bold fs-5">
+                    <span>Genel Toplam</span>
+                    <span>@grandTotal.ToString("C")</span>
+                </div>
+                <hr />
+                <div class="d-grid gap-2">
+                    <a href="/Home/Index" class="btn btn-danger w-100">Alışverişe Devam Et</a>
+                    <a href="/Cart/CheckOut" class="btn btn-success w-100">Satın Al</a>
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>

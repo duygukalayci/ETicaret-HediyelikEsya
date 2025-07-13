@@ -37,6 +37,8 @@ namespace GiftShop.Entity.Entities
         // Sipariş ilişkisi
         public List<OrderDetail> OrderDetails { get; set; }= new List<OrderDetail>();
 
+        public List<ProductImage>? ProductImages { get; set; } = new List<ProductImage>();
+
 
     }
 }

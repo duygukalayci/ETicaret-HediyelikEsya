@@ -45,9 +45,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppUser.Email)
-            </td>
+                <td>
+                    @($"{item.AppUser.Name} {item.AppUser.Surname}")
+                </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OrderID">Güncelle</a> |
                 <a asp-action="Details" asp-route-id="@item.OrderID">Detay</a> |

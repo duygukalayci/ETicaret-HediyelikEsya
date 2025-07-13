@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Sipariş Tamamlandı";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="card shadow-sm p-5 mx-auto" style="max-width: 500px; border-radius: 12px; text-align: center;">
+        <div class="mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width: 80px; height: 80px; color: #28a745;" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.992a.75.75 0 1 0-1.06-1.06L7.5 9.44 5.525 7.465a.75.75 0 1 0-1.06 1.06l2.505 2.505z" />
+            </svg>
+        </div>
+
+        <h2 class="mb-3 text-success fw-bold">Siparişiniz Alındı!</h2>
+        <p class="mb-4 fs-5 text-muted">
+            Siparişiniz için teşekkür ederiz.<br />
+            En kısa sürede kargoya verilecektir.
+        </p>
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-success btn-lg rounded-pill shadow-sm text-uppercase fw-bold px-5">
+                Anasayfaya Dön
+            </a>
+        </div>
+
+    </div>
+</div>

@@ -1,26 +1,22 @@
 ﻿@model List<Category>
 
-@foreach (var cat in Model)
-{
-    <li>
-        <a href="@Url.Action("ByCategory", "Products", new { categoryId = cat.CategoryID })" class="navbar-link has-after">
-            @cat.Name
-        </a>
+<ul>
+    @foreach (var cat in Model)
+    {
+        <li>
+            <a href="@Url.Action("ByCategory", "Products", new { categoryId = cat.CategoryID })">@cat.Name</a>
 
-        @if (cat.SubCategories != null && cat.SubCategories.Any())
-        {
-            <ul>
-                @foreach (var sub in cat.SubCategories)
-                {
-                    <li>
-                        <a href="@Url.Action("ByCategory", "Products", new { categoryId = sub.CategoryID })" class="navbar-link">
-                            @sub.Name
-                        </a>
-                    </li>
-                }
-            </ul>
-        }
-    </li>
-}
-
-
+            @if (cat.SubCategories != null && cat.SubCategories.Any())
+            {
+                <ul>
+                    @foreach (var sub in cat.SubCategories)
+                    {
+                        <li>
+                            <a href="@Url.Action("ByCategory", "Products", new { categoryId = sub.CategoryID })">@sub.Name</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+</ul>

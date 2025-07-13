@@ -1,0 +1,62 @@
+﻿@model GiftShop.Entity.Entities.Address
+
+@{
+    ViewData["Title"] = "Adres Ekle";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Adres Ekle</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Disctrict" class="control-label"></label>
+                    <input asp-for="Disctrict" class="form-control" />
+                    <span asp-validation-for="Disctrict" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="OpenAddress" class="control-label"></label>
+                    <textarea asp-for="OpenAddress" class="form-control"></textarea>
+                    <span asp-validation-for="OpenAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-2">
+                    <input class="form-check-input" asp-for="IsActive" />
+                    <label class="form-check-label" asp-for="IsActive"></label>
+                </div>
+
+                <div class="form-check mb-2">
+                    <input class="form-check-input" asp-for="IsBillingAddress" />
+                    <label class="form-check-label" asp-for="IsBillingAddress"></label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="IsDeliveryAddress" />
+                    <label class="form-check-label" asp-for="IsDeliveryAddress"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Ekle" class="btn btn-primary w-100" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

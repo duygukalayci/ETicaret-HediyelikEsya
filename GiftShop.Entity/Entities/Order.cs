@@ -19,7 +19,7 @@ namespace GiftShop.Entity.Entities
         [Display(Name = "Toplam Tutar")]
         public decimal CalculatedTotalAmount => OrderDetails?.Sum(od => od.UnitPrice * od.Quantity) ?? 0;
         [Display(Name = "Sipariş Durumu")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         /// // Kullanıcı ilişkisi
         /// 
@@ -32,7 +32,11 @@ namespace GiftShop.Entity.Entities
 
         public List<OrderDetail> OrderDetails{ get; set; }= new List<OrderDetail>();
 
-        public Shipment Shipment { get; set; }  // Kargo bilgisi
+        [Display(Name = "Fatura Adresi")]
+        public string BillingAddress { get; set; }
+        [Display(Name = "Teslimat Adresi")]
+        public string DeliveryAddress { get; set; }
+
 
 
 

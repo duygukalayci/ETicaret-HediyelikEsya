@@ -1,0 +1,47 @@
+﻿@model GiftShop.Entity.Entities.ProductImage
+
+@{
+    ViewData["Title"] = "Ürün Resmi Düzenle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <input type="hidden" asp-for="ProductImageID" />
+
+            <div class="form-group">
+                <label asp-for="Alt"></label>
+                <input asp-for="Alt" class="form-control" />
+                <span asp-validation-for="Alt" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Mevcut Resim</label><br />
+                <img src="~/Img/@Model.ImageUrl" alt="@Model.Alt" style="max-width:200px; height:auto;" />
+            </div>
+
+            <div class="form-group">
+                <label>Resmi Değiştir</label>
+                <input type="file" name="imageFile" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductID"></label>
+                @{
+                    var productList = ViewData["ProductID"] as IEnumerable<SelectListItem>;
+                }
+                <select asp-for="ProductID" class="form-select" asp-items="productList"></select>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-2">Kaydet</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Listeye Dön</a>
+</div>
+

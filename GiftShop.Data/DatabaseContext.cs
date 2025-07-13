@@ -12,43 +12,20 @@ namespace GiftShop.Data
 {
     public class DatabaseContext: DbContext
     {
-        //public DbSet<AppUser> AppUsers { get; set; }
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<Order> Orders { get; set; }
-        //public DbSet<OrderDetail> OrderDetails { get; set; }
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<ContactMessage> ContactMessages { get; set; }
-        //public DbSet<Slider> Sliders { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=GiftShopDb; Trusted_Connection=True; TrustServerCertificate=True;");
-        //    base.OnConfiguring(optionsBuilder);
-
-        //}
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    //modelBuilder.ApplyConfiguration(new AppUserConfiguration());
-        //    //modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        //    // tüm configuration sınıflarını otomatik olarak uygular.
-        //    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        //    base.OnModelCreating(modelBuilder);
-        //}
-
-
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
 
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<Slider> Sliders { get; set; }
-        public DbSet<Shipment> Shipments { get; set; }
 
 
 

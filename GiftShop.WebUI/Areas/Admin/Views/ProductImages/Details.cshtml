@@ -1,0 +1,44 @@
+﻿@model GiftShop.Entity.Entities.ProductImage
+
+@{
+    ViewData["Title"] = "Ürün Resim Detayı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Alt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Alt)
+        </dd>
+
+        <dt class="col-sm-2">
+            Resim Önizleme
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/Img/@Model.ImageUrl" alt="@Model.Alt" class="img-thumbnail" style="max-width: 300px; height: auto;" />
+        </dd>
+
+@*         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ImageUrl
+        </dd> *@
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Product?.Name
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ProductImageID" class="btn btn-warning">Düzenle</a> |
+    <a asp-action="Index" class="btn btn-secondary">Listeye Dön</a>
+</div>

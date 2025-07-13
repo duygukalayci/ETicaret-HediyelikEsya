@@ -1,0 +1,95 @@
+﻿@model List<GiftShop.Entity.Entities.Order>
+
+@{
+    ViewData["Title"] = "Siparişlerim";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+
+<style>
+    .badge-pink {
+        background-color: #e83e8c; /* Bootstrap pembe tonu */
+        color: white;
+    }
+
+    .table-header-pink {
+        background-color: #f8d7e9;
+        color: #721c24;
+    }
+
+    .text-pink {
+        color: #e83e8c;
+        font-weight: 600;
+    }
+
+    td.img-cell {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    td.img-cell img {
+            height: 50px;
+            width: auto;
+            display: inline-block;
+    }
+
+</style>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold text-pink" style="letter-spacing: 1.5px;">Siparişlerim</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            Henüz bir siparişiniz bulunmamaktadır.
+        </div>
+    }
+    else
+    {
+        foreach (var order in Model)
+        {
+            <div class="card mb-4 shadow-sm rounded">
+                <div class="card-header bg-light">
+                    <strong class="text-pink">Sipariş Tarihi:</strong> @(order.OrderDate.HasValue? order.OrderDate.Value.ToString("dd.MM.yyyy HH:mm") : "-")<br />
+                    <strong>Durum:</strong> <span class="badge badge-pink">@order.Status</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Teslimat Adresi:</strong> @order.DeliveryAddress</p>
+                    <p><strong>Fatura Adresi:</strong> @order.BillingAddress</p>
+
+                    <table class="table table-striped table-bordered mt-3">
+                        <thead class="table-header-pink">
+                            <tr>
+
+								<th>Resim</th>
+                                <th>Ürün</th>
+                                <th>Adet</th>
+                                <th>Birim Fiyat</th>
+                                <th>Toplam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in order.OrderDetails)
+                            {
+                                <tr>
+                                    <td class="img-cell">
+                                        <img src="/Img/@item.Product?.ImageUrl" alt="@item.Product?.Name" />
+                                    </td>
+
+                                    <td>@item.Product?.Name</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.UnitPrice.ToString("C")</td>
+                                    <td>@((item.Quantity * item.UnitPrice).ToString("C"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="text-end fw-bold fs-5">
+                        Toplam: @(order.TotalAmount.HasValue? order.TotalAmount.Value.ToString("C") : "-")
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -26,7 +26,8 @@ namespace GiftShop.WebUI.Controllers
         {
             return HttpContext.Session.GetJson<List<Product>>("GetFavorites") ?? new List<Product>();
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add(int productId)
         {
             var favorites = GetFavorites();
@@ -36,6 +37,7 @@ namespace GiftShop.WebUI.Controllers
             {
                 favorites.Add(product);
                 HttpContext.Session.SetJson("GetFavorites", favorites);
+                return Redirect(Request.Headers["Referer"].ToString());
             }
 
             return RedirectToAction("Index");

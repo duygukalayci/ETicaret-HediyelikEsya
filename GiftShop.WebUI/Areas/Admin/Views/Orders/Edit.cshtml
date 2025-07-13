@@ -7,7 +7,6 @@
 }
 
 <div class="container mt-4">
-    <h2 class="mb-4 text-primary">@ViewData["Title"]</h2>
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -24,6 +23,20 @@
                     <p class="form-control-plaintext">@Model.OrderDate?.ToString("dd.MM.yyyy")</p>
                 </div>
             </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label fw-bold">Teslimat Adresi:</label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">@Model.DeliveryAddress</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label fw-bold">Fatura Adresi:</label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">@Model.BillingAddress</p>
+                </div>
+            </div>
+
 
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label fw-bold">Toplam Tutar:</label>
@@ -40,7 +53,9 @@
             </div>
 
             <form asp-area="Admin" asp-controller="Orders" asp-action="Edit" asp-route-id="@Model.OrderID" method="post">
+                @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="OrderID" />
+
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
 
                 <div class="mb-3">

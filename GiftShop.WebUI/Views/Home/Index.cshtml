@@ -65,73 +65,67 @@
     <!--
       - #BLOG
     -->
+    <!--
+      - #BLOG / KEŞFETMEYE DEVAM ET
+    -->
     <section class="section blog" id="blog" aria-label="blog" data-section>
         <div class="container">
 
-            <h2 class="h2-large section-title">More to Discover</h2>
+            <h2 class="h2-large section-title">Keşfetmeye Devam Et</h2>
 
             <ul class="flex-list">
 
                 <li class="flex-item">
                     <div class="blog-card">
-
                         <figure class="card-banner img-holder has-before hover:shine" style="--width: 700; --height: 450;">
-                            <img src="~/giftshopunklasörü/glowing-master/assets/images/blog-1.jpg" width="700" height="450" loading="lazy" alt="Find a Store"
+                            <img src="~/Img/1000_F_473119026_OLeu1GNbwBILQNJLo0M2jsnelMKw6odP.jpg" width="700" height="450" loading="lazy" alt="Mağazamız"
                                  class="img-cover">
                         </figure>
 
                         <h3 class="h3">
-                            <a href="#" class="card-title">Find a Store</a>
+                            <a href="/Home/About/" class="card-title">Bizi Tanıyın</a>
                         </h3>
 
-                        <a href="#" class="btn-link">
-                            <span class="span">Our Store</span>
-
+                        <a href="/Home/About/" class="btn-link">
+                            <span class="span">Hakkımızda</span>
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                         </a>
-
                     </div>
                 </li>
 
                 <li class="flex-item">
                     <div class="blog-card">
-
                         <figure class="card-banner img-holder has-before hover:shine" style="--width: 700; --height: 450;">
-                            <img src="~/giftshopunklasörü/glowing-master/assets/images/blog-2.jpg" width="700" height="450" loading="lazy" alt="From Our Blog"
+                            <img src="~/Img/1000_F_293861511_TNn1xOLlruoi2ipDnsQvyMSAudMu49GO.jpg" width="700" height="450" loading="lazy" alt="Hediye Blogu"
                                  class="img-cover">
                         </figure>
 
                         <h3 class="h3">
-                            <a href="#" class="card-title">From Our Blog</a>
+                            <a href="/Home/Blog/" class="card-title">Hediye Rehberimiz</a>
                         </h3>
 
-                        <a href="#" class="btn-link">
-                            <span class="span">Our Store</span>
-
+                        <a href="/Home/Blog/" class="btn-link">
+                            <span class="span">Bloğa Git</span>
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                         </a>
-
                     </div>
                 </li>
 
                 <li class="flex-item">
                     <div class="blog-card">
-
                         <figure class="card-banner img-holder has-before hover:shine" style="--width: 700; --height: 450;">
-                            <img src="~/giftshopunklasörü/glowing-master/assets/images/blog-3.jpg" width="700" height="450" loading="lazy" alt="Our Story"
+                            <img src="~/Img/1000_F_243394535_1NxyweMmLXTLqFjIaLpk34xpIL24dT9V.jpg" width="700" height="450" loading="lazy" alt="Biz Kimiz?"
                                  class="img-cover">
                         </figure>
 
                         <h3 class="h3">
-                            <a href="#" class="card-title">Our Story</a>
+                            <a href=" @Url.Action("Index", "Products", new { categoryId = 6 })" class="card-title">Kurumsal Hediyeler</a>
                         </h3>
 
-                        <a href="#" class="btn-link">
-                            <span class="span">Our Store</span>
-
+                        <a href="@Url.Action("Index", "Products", new { categoryId = 6 })" class="btn-link">
+                            <span class="span">Ürünleri Keşfet</span>
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                         </a>
-
                     </div>
                 </li>
 
@@ -139,4 +133,5 @@
 
         </div>
     </section>
+
 </article>

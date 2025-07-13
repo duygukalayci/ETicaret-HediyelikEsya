@@ -14,8 +14,8 @@
     </div>
 }
 
-<form method="post" asp-action="Profile" 
-style="max-width: 500px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<form method="post" asp-controller="Account" asp-action="Profile"
+    style="max-width: 500px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
     <input type="hidden" asp-for="AppUserID" />
 
     <label>Kullanıcı Adı:</label>

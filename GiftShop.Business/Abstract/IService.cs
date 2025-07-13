@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace GiftShop.Business.Abstract
 {
@@ -28,6 +23,6 @@ namespace GiftShop.Business.Abstract
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
         Task<int> SaveChangesAsync();
-        Task GetAsync(Func<object, bool> value);
+        Task<T> GetAsync(Expression<Func<T, bool>> expression);
     }
 }

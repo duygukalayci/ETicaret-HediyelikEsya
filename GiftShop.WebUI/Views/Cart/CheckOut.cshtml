@@ -1,0 +1,189 @@
+﻿@model GiftShop.WebUI.Models.CheckOutViewModel
+
+@{
+    ViewData["Title"] = "Satın Al";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+
+    decimal shippingCost = Model.TotalPrice >= 500 ? 0 : 30;
+    decimal grandTotal = Model.TotalPrice + shippingCost;
+}
+
+<h2 class="text-center my-4 fw-bold" style="letter-spacing: 2px; color: #dc3545;">SATIN AL</h2>
+
+<section class="container my-5">
+    <form asp-action="CheckOut" method="post">
+
+    <div class="row justify-content-center">
+        <!-- Sol Alan (Ürünler + Adres) -->
+        <div class="col-md-8">
+            <!-- Ürünler -->
+            <div class="mb-5">
+                <h4 class="mb-3">Sepetinizdeki Ürünler</h4>
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th></th>
+                            <th>Ürün</th>
+                            <th>Adet</th>
+                            <th>Birim</th>
+                            <th>Toplam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartProducts)
+                        {
+                            <tr>
+                                <td><img src="/Img/@item.Product.ImageUrl" style="height: 40px;" /></td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Product.Price.ToString("C")</td>
+                                <td>@((item.Product.Price * item.Quantity).ToString("C"))</td>
+                            </tr>
+                        }
+                        <tr class="table-secondary fw-bold">
+                            <td colspan="4" class="text-end">Ara Toplam:</td>
+                            <td>@Model.TotalPrice.ToString("C")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Adresler -->
+            <div class="mb-5">
+                @if (Model.Addresses == null || !Model.Addresses.Any())
+                {
+                    <div class="alert alert-warning d-flex justify-content-between align-items-center">
+                        <span>Adres kaydınız yok. Lütfen adres ekleyin.</span>
+                        <a href="@Url.Action("Create", "MyAddresses")" class="btn btn-primary btn-sm">Adres Ekle</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light fw-bold">Adresleriniz</div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                @foreach (var address in Model.Addresses)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>@address.Title</strong> - @address.City / @address.Disctrict<br />
+                                            @address.OpenAddress
+                                        </div>
+                                        <div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="deliveryAddress" value="@address.Id" required />
+                                                <label class="form-check-label">Teslimat Adresi</label>
+                                            </div>
+                                            <div class="form-check form-check-inline ms-3">
+                                                <input class="form-check-input" type="radio" name="billingAddress" value="@address.Id" required />
+                                                <label class="form-check-label">Fatura Adresi</label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Sağ Alan (Özet) -->
+        <!-- Sağ Alan (Özet) -->
+            <input type="hidden" name="TotalPrice" value="@grandTotal" />
+
+            <div class="row">
+                <!-- Sol taraf: Sipariş Özeti -->
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-light fw-bold">Sepet Özeti</div>
+                        <div class="card-body">
+                            @foreach (var item in Model.CartProducts)
+                            {
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <small class="text-muted">@item.Product.Name</small>
+                                        <div class="text-muted">x @item.Quantity</div>
+                                    </div>
+                                    <div>
+                                        <strong>@((item.Product.Price* item.Quantity).ToString("C"))</strong>
+                                    </div>
+                                </div>
+                            }
+                            <hr />
+                            <div class="d-flex justify-content-between">
+                                <span>Ara Toplam</span>
+                                <span>@Model.TotalPrice.ToString("C")</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Kargo</span>
+                                <span>@(shippingCost == 0 ? "Ücretsiz" : shippingCost.ToString("C"))</span>
+                            </div>
+                            <hr />
+                            <div class="d-flex justify-content-between fw-bold fs-5">
+                                <span>Genel Toplam</span>
+                                <span>@grandTotal.ToString("C")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ taraf: Ödeme Bilgileri -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-4">
+                        <h4 class="mb-3">Ödeme Bilgileri</h4>
+
+                        <div class="mb-3">
+                            <label for="CardName" class="form-label">Kart Üzerindeki İsim</label>
+                            <input type="text" class="form-control" id="CardName" name="CardName" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="CardNumber" class="form-label">Kart Numarası</label>
+                            <input type="text" class="form-control" id="CardNumber" name="CardNumber" required />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ExpiryMonth" class="form-label">Ay</label>
+                                <select class="form-select" id="ExpiryMonth" name="CardMonth" required>
+                                    <option value="">Ay Seçin</option>
+                                    @for (int i = 1; i <= 12; i++)
+                                    {
+                                        <option value="@i">@i.ToString("D2")</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="ExpiryYear" class="form-label">Yıl</label>
+                                <select class="form-select" id="ExpiryYear" name="CardYear" required>
+                                    <option value="">Yıl Seçin</option>
+                                    @{
+                                        int currentYear = DateTime.Now.Year;
+                                        for (int y = currentYear; y <= currentYear + 10; y++)
+                                        {
+                                            <option value="@y">@y</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="CVV" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="CVV" name="CVV" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100">Siparişi Tamamla</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+    </div>
+    </form>
+</section>

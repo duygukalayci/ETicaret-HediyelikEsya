@@ -6,14 +6,31 @@
 }
 
 
-<table class="table table-striped table-hover">
-    <thead>
+<!-- Filtreleme -->
+<form method="get" class="mb-4 row">
+    <div class="col-md-4">
+        <input type="text" name="orderId" value="@Context.Request.Query["orderId"]" class="form-control" placeholder="Sipariş No ile filtrele..." />
+    </div>
+    <div class="col-md-4">
+        <input type="text" name="customerName" value="@Context.Request.Query["customerName"]" class="form-control" placeholder="Müşteri Adı ile filtrele..." />
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Filtrele</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped table-hover align-middle">
+    <thead class="table-dark text-center">
         <tr>
             <th>Sipariş No</th>
+            <th>Müşteri</th>
+            <th>Ürün Resmi</th>
             <th>Ürün Adı</th>
+			<th>Sipariş Durumu</th>
             <th>Adet</th>
             <th>Birim Fiyatı</th>
-            <th>Toplam Tutar</th>
+            <th>Toplam</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -21,12 +38,27 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Order.OrderID</td>
-                <td>@item.Product.Name</td>
-                <td>@item.Quantity</td>
-                <td>@String.Format("{0:C}", item.UnitPrice)</td>
-                <td>@String.Format("{0:C}", item.TotalAmount ?? (item.Quantity * item.UnitPrice))</td>
+                <td class="text-center">@item.Order.OrderID</td>
                 <td>
+                    @item.Order.AppUser?.Name @item.Order.AppUser?.Surname
+                </td>
+                <td class="text-center">
+                    @if (!string.IsNullOrEmpty(item.Product.ImageUrl))
+                    {
+                        <img src="@Url.Content($"~/Img/{item.Product.ImageUrl}")" alt="Ürün Resmi" style="height: 50px;" />
+                    }
+                    else
+                    {
+                        <span>Yok</span>
+                    }
+                </td>
+                <td>@item.Product.Name</td>
+                <td class="text-center">@item.Order.Status</td>
+
+                <td class="text-center">@item.Quantity</td>
+                <td class="text-end">@item.UnitPrice.ToString("C")</td>
+                <td class="text-end">@((item.TotalAmount ?? item.Quantity * item.UnitPrice).ToString("C"))</td>
+                <td class="text-center">
                     <a asp-action="Details" asp-route-id="@item.OrderDetailID" class="btn btn-sm btn-info">Detay</a>
                     <a asp-action="Delete" asp-route-id="@item.OrderDetailID" class="btn btn-sm btn-danger">Sil</a>
                 </td>
@@ -34,4 +66,3 @@
         }
     </tbody>
 </table>
-

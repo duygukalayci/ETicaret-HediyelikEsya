@@ -7,22 +7,71 @@
 <section>
     <div class="container px-4 px-lg-5 my-1">
         <div class="row gx-4 gx-lg-5 align-items-center">
-
-            <!-- Ürün Resmi -->
+            <!-- Carousel + Ürün Resimleri -->
             <div class="col-md-6">
-                @if (!string.IsNullOrEmpty(Model.Product?.ImageUrl))
-                {
-                    <img class="card-img-top mb-5 mb-md-0" style="object-fit: contain; max-height: 700px; width: 100%;" src="@Url.Content("~/img/" + Model.Product.ImageUrl)" alt="@Model.Product.Name" />
+                @{
+                    var allImages = new List<string>();
+
+                    if (!string.IsNullOrEmpty(Model.Product.ImageUrl))
+                    {
+                        allImages.Add(Model.Product.ImageUrl);
+                    }
+
+                    if (Model.Product.ProductImages != null && Model.Product.ProductImages.Any())
+                    {
+                        allImages.AddRange(Model.Product.ProductImages.Select(p => p.ImageUrl));
+                    }
                 }
-                else
+
+                @if (allImages.Any())
                 {
-                    <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="Resim Yok" />
+                    <div id="productCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+
+                        @if (allImages.Count > 1)
+                        {
+                            <div class="carousel-indicators">
+                                @for (int i = 0; i < allImages.Count; i++)
+                                {
+                                    <button type="button"
+                                            data-bs-target="#productCarousel"
+                                            data-bs-slide-to="@i"
+                                            class="@(i == 0 ? "active" : "")"
+                                            aria-current="@(i == 0 ? "true" : "false")"
+                                            aria-label="Slide @(i + 1)">
+                                    </button>
+                                }
+                            </div>
+                        }
+
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < allImages.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <img src="@Url.Content("~/Img/" + allImages[i])"
+                                         class="d-block w-100 rounded shadow"
+                                         style="max-height: 500px; object-fit: contain;"
+                                         alt="Ürün Resmi @(i + 1)" />
+                                </div>
+                            }
+                        </div>
+
+                        @if (allImages.Count > 1)
+                        {
+                            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Önceki</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Sonraki</span>
+                            </button>
+                        }
+                    </div>
                 }
             </div>
 
             <!-- Ürün Bilgileri -->
             <div class="col-md-6">
-
                 <h1 class="display-5 fw-bolder mb-3 product-name" style="color:black;">
                     @Model.Product?.Name
                 </h1>
@@ -38,68 +87,42 @@
                 </p>
 
                 <div class="d-flex align-items-center mb-3 mt-5">
-                    <input class="form-control text-center me-3 quantity-input" id="inputQuantity" name="quantity" type="number" min="1" value="1" style="max-width: 6rem;" />
 
-                    <form asp-controller="Cart" asp-action="Add" method="post" class="m-0 me-3">
+
+                    <form asp-controller="Cart" asp-action="Add" method="post" class="m-0 me-3 d-flex align-items-center gap-3">
                         <input type="hidden" name="productId" value="@Model.Product.ProductID" />
-                        <input type="hidden" name="quantity" id="hiddenQuantity" value="1" />
+                        <input class="form-control text-center quantity-input"
+                               name="quantity"
+                               type="number"
+                               min="1"
+                               value="1"
+                               style="max-width: 6rem;" />
                         <button type="submit" class="btn btn-outline-dark flex-shrink-0">
                             <i class="bi-cart-fill me-1"></i>
                             Sepete Ekle
                         </button>
                     </form>
 
-                    <form asp-controller="Favorites" asp-action="Add" method="post" class="m-0">
-                        <input type="hidden" name="ProductID" value="@Model.Product.ProductID" />
-                        <button type="submit" class="btn btn-link p-0" title="Favorilere Ekle" style="font-size: 1.8rem; color:@(Model.IsFavorite ? "red" : "gray")">
+
+
+                    <form asp-controller="Favorites" asp-action="Add" method="post" style="display:inline;">
+                        <input type="hidden" name="productId" value="@Model.Product.ProductID" />
+                        <button type="submit"
+                                class="btn btn-link p-0"
+                                title="Favorilere Ekle"
+                                style="font-size: 1.8rem; color:@(Model.IsFavorite ? "red" : "gray")">
                             <ion-icon name="heart" aria-label="Favori"></ion-icon>
                         </button>
                     </form>
                 </div>
-
-
             </div>
         </div>
     </div>
 </section>
 
-<!-- İlgili Ürünler -->
-<section class="py-5 bg-light">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4 text-center" style="color: #333;">Bunları da Beğenebilirsiniz</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach (var related in Model.RelatedProducts)
-            {
-                <div class="col mb-5">
-                    <div class="card h-100 shadow-sm border-0">
-                        <img class="card-img-top" src="@Url.Content("~/img/" + (string.IsNullOrEmpty(related.ImageUrl) ? "default.jpg" : related.ImageUrl))" alt="@related.Name">
-                        <div class="card-body p-4 text-center">
-                            <h5 class="fw-bold">@related.Name</h5>
-                            <p class="mb-0 text-muted">@related.Price.ToString("C")</p>
-                        </div>
-                        <div class="card-footer bg-transparent border-top-0 text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="@Url.Action("Details", "Products", new { id = related.ProductID })">İncele</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</section>
 
-@section Scripts {
-    <script>
-        const inputQuantity = document.getElementById('inputQuantity');
-        const hiddenQuantity = document.getElementById('hiddenQuantity');
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        inputQuantity.addEventListener('input', () => {
-            let val = parseInt(inputQuantity.value);
-            if (isNaN(val) || val < 1) val = 1;
-            inputQuantity.value = val;
-            hiddenQuantity.value = val;
-        });
-    </script>
-}
 
 <style>
     div.fs-5.mb-5 {
@@ -117,5 +140,27 @@
         font-weight: 500;
         border: 1px solid #ccc;
         border-radius: 4px;
+    }
+    /* Buton genişliği */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%; /* Daha geniş yap */
+        opacity: 0.7; /* Görünürlük */
+        transition: opacity 0.3s;
+    }
+
+        /* Buton üzerine gelince daha görünür olsun */
+     .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+
+            acity: 1;
+     }
+
+    /* Ok ikonlarının arka planı */
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 50%;
+        padding: 10px;
     }
 </style>

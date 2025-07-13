@@ -35,14 +35,22 @@
 									@item.Price.ToString("C")
 								</td>
 								<td>
-									<form asp-action="Remove" asp-controller="Favorites" method="post" style="display:inline;">
+									<form asp-action="Remove" asp-controller="Favorites" method="post" style="display:inline; margin-right: 5px;">
 										<input type="hidden" name="ProductID" value="@item.ProductID" />
 										<button type="submit" class="btn btn-sm btn-danger" title="Favorilerden Kaldır">
 											Kaldır
 										</button>
 									</form>
 
+									<form asp-action="Add" asp-controller="Cart" method="post" style="display:inline;">
+										<input type="hidden" name="productId" value="@item.ProductID" />
+										<input type="hidden" name="quantity" value="1" />
+										<button type="submit" class="btn btn-sm btn-success" title="Sepete Ekle">
+											Sepete Ekle
+										</button>
+									</form>
 								</td>
+
 							</tr>
 						}
 					</tbody>

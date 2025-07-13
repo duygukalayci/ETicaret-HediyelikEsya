@@ -35,22 +35,29 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
-            <div class="form-group mb-2">
-                <label class="control-label">Ürün Görseli</label>
-                <input type="file" name="Image" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+          <div class="form-group mb-2">
+               <label>Ürün Görseli</label>
 
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                {
-                    <div class="mt-2">
-                        <img src="~/Img/@Model.ImageUrl" height="85" class="img-thumbnail" />
-                        <div class="form-check mt-1">
-                            <input class="form-check-input" type="checkbox" name="cbResmiSil" id="cbResmiSil" />
-                            <label class="form-check-label" for="cbResmiSil">Resmi Sil</label>
-                        </div>
-                    </div>
-                }
-            </div>
+               @if (!string.IsNullOrEmpty(Model.ImageUrl))
+
+               {
+                   <div class="mb-2">
+                   <img src="~/Img/@Model.ImageUrl" height="85" class="img-thumbnail" />
+                   </div>
+               }
+               <div class="form-check">
+                    <input type="hidden" name="cbResmiSil" value="false" />
+                    <input class="form-check-input" type="checkbox" name="cbResmiSil" id="cbResmiSil" value="true" />
+                    <label class="form-check-label" for="cbResmiSil">Resmi Sil</label>
+               </div>
+
+               <input type="file" name="Image" class="form-control mt-2" />
+               <span asp-validation-for="ImageUrl" class="text-danger"></span>
+          </div>
+
+         
+   
+
 
             <div class="form-group mb-2">
                 <label asp-for="Stock" class="control-label"></label>

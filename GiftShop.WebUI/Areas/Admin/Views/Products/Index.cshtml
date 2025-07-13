@@ -4,6 +4,11 @@
     ViewData["Title"] = "Ürünler";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    #datatablesSimple tbody tr td:last-child{
+		white-space: nowrap;
+    }
+</style>
 
 <p>
     <a asp-action="Create" class="btn btn-outline-primary">
@@ -11,8 +16,8 @@
     </a>
 </p>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-striped align-middle text-center">
+<div class="table-responsive" >
+    <table class="table table-bordered table-striped align-middle text-center" id="datatablesSimple">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Name)</th>
@@ -38,6 +43,14 @@
                             <a href="~/Img/@item.ImageUrl">
                                 <img src="~/Img/@item.ImageUrl" alt="Ürün Resmi" style="width:135px; height:auto;" class="img-thumbnail" />
                             </a>
+                            <a href="/Admin/ProductImages/Create?productId=@item.ProductID" title="Yeni Resim Ekle" target="_blank" class="btn btn-sm btn-default ms-2">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
+
+                            <a href="/Admin/ProductImages/?productId=@item.ProductID" title="Ürün Resimleri" target="_blank" class="btn btn-sm btn-default ms-2">
+                                <i class="fa-solid fa-images"></i>
+                            </a>
+
                            
                         }
 
@@ -59,12 +72,20 @@
                     </td>
                     <td>@item.Category?.Name</td>
                     <td>
-                        <a class="btn btn-sm btn-warning" asp-area="Admin" asp-action="Edit" asp-route-id="@item.ProductID">Düzenle</a>
-                        <a class="btn btn-sm btn-info" asp-area="Admin" asp-action="Details" asp-route-id="@item.ProductID">Detay</a>
-                        <a class="btn btn-sm btn-danger" asp-area="Admin" asp-action="Delete" asp-route-id="@item.ProductID">Sil</a>
+                        <a class="btn btn-sm btn-warning " asp-area="Admin" asp-action="Edit" asp-route-id="@item.ProductID"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="btn btn-sm btn-info " asp-area="Admin" asp-action="Details" asp-route-id="@item.ProductID"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <a class="btn btn-sm btn-danger" asp-area="Admin" asp-action="Delete" asp-route-id="@item.ProductID"><i class="fa-solid fa-trash "></i></a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/demo/chart-bar-demo.js"></script>
+    <script src="~/lib/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/demo/datatables-demo.js"></script>
+}

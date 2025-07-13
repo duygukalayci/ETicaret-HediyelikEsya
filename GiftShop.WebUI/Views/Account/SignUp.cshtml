@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Üye Ol";
-    Layout = "~/Views/Shared/_siteLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <style>
@@ -28,33 +28,33 @@
         font-size: 18px;
     }
 
-    .SignUp-form img {
+        .SignUp-form img {
             display: block;
             margin: 0 auto 25px auto;
             width: 100px;
             height: auto;
-    }
+        }
 
-    .SignUp-form h1 {
+        .SignUp-form h1 {
             text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
-    }
+        }
 
-    .SignUp-form .form-control {
+        .SignUp-form .form-control {
             margin-bottom: 20px;
             padding: 12px 15px;
             font-size: 18px;
             height: auto;
-    }
+        }
 
-    .SignUp-form button {
+        .SignUp-form button {
             padding: 12px 30px;
             font-size: 18px;
             display: block;
             margin: 0 auto;
             width: auto;
-    }
+        }
 
     .text-muted {
         text-align: center;
@@ -69,27 +69,46 @@
         transition: color 0.3s ease;
     }
 
-    .link-hover:hover {
+        .link-hover:hover {
             color: #0056b3; /* üzerine gelince renk */
             text-decoration: underline; /* istersen altı çizili */
-     }
-
-</style>
+        }</style>
 
 <div class="register-container">
     <form asp-action="SignUp" method="post" class="SignUp-form">
 
-
-
         <img src="/giftshopunklasörü/glowing-master/assets/images/2.png" alt="Logo" />
         <h1>Üye Ol</h1>
 
-        <input asp-for="Name" class="form-control" placeholder="Ad" required />
-        <input asp-for="Surname" class="form-control" placeholder="Soyad" required />
-        <input asp-for="UserName" class="form-control" placeholder="Kullanıcı Adı" required />
-        <input asp-for="Phone" class="form-control" placeholder="Telefon" required />
-        <input asp-for="Email" class="form-control" placeholder="Email adresiniz" required />
-        <input asp-for="Password" type="password" class="form-control" placeholder="Şifre" required />
+        <div class="form-group">
+            <input asp-for="Name" class="form-control" placeholder="Ad" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Surname" class="form-control" placeholder="Soyad" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="UserName" class="form-control" placeholder="Kullanıcı Adı" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Phone" class="form-control" placeholder="Telefon" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Email" class="form-control" placeholder="Email adresiniz" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Password" type="password" class="form-control" placeholder="Şifre" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
 
         <button type="submit" class="btn btn-success">Kayıt Ol</button>
 
@@ -97,4 +116,6 @@
     </form>
 </div>
 
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

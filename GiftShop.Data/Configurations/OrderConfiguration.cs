@@ -19,17 +19,17 @@ namespace GiftShop.Data.Configurations
                    .HasDefaultValueSql("GETDATE()");
 
             builder.Property(o => o.TotalAmount)
-                 .HasColumnType("decimal(10,2)")
-                 .IsRequired(false);
-
-
-
+                   .HasColumnType("decimal(10,2)")
+                   .IsRequired(false);
 
             builder.Property(o => o.Status)
-                     .IsRequired()
-                     .HasColumnType("varchar(20)")
-                     .HasMaxLength(20);
-         
+                   .HasColumnType("varchar(20)")
+                   .HasMaxLength(20);
+
+            builder.HasMany(o => o.OrderDetails)
+                   .WithOne(od => od.Order)
+                   .HasForeignKey(od => od.OrderID)
+                   .OnDelete(DeleteBehavior.Cascade);
 
 
         }

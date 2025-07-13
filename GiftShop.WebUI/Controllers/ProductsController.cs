@@ -4,6 +4,7 @@ using GiftShop.WebUI.ExtensionMethods;
 using GiftShop.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;   
 
 namespace GiftShop.WebUI.Controllers
 {
@@ -29,7 +30,15 @@ namespace GiftShop.WebUI.Controllers
             }
             else
             {
-                products = _productService.GetAll(p => p.CategoryID == categoryId);
+                var allCategories = _categoryService.GetAll();
+
+                var categoryIds = allCategories
+                    .Where(c => c.CategoryID == categoryId || c.ParentCategoryID == categoryId)
+                    .Select(c => c.CategoryID)
+                    .ToList();
+
+                products = _productService.GetAll(p => categoryIds.Contains(p.CategoryID));
+
                 var category = _categoryService.Find(categoryId.Value);
                 ViewBag.CategoryName = category?.Name ?? "Kategori";
             }
@@ -39,10 +48,21 @@ namespace GiftShop.WebUI.Controllers
 
         public IActionResult ByCategory(int categoryId)
         {
-            var products = _productService.GetAll(p => p.CategoryID == categoryId);
+            var allCategories = _categoryService.GetAll();
+
+            // Seçilen kategori + alt kategorilerin ID’leri
+            var categoryIds = allCategories
+                .Where(c => c.CategoryID == categoryId || c.ParentCategoryID == categoryId)
+                .Select(c => c.CategoryID)
+                .ToList();
+
+            // Ürünleri bu kategori id’lerine göre filtrele
+            var products = _productService.GetAll(p => categoryIds.Contains(p.CategoryID));
+
             var category = _categoryService.Find(categoryId);
             ViewBag.CategoryName = category?.Name ?? "Kategori";
-            return View(products);
+
+            return View("Index", products);
         }
 
         public IActionResult Details(int id)
@@ -53,6 +73,7 @@ namespace GiftShop.WebUI.Controllers
             var product = _productService.GetAllQueryable()
                      .Where(p => p.ProductID == id && p.IsActive)
                      .Include(p => p.Category)
+                     .Include(p => p.ProductImages)  
                      .FirstOrDefault();
 
             if (product == null)
@@ -71,6 +92,7 @@ namespace GiftShop.WebUI.Controllers
 
             return View(model);
         }
+
 
         public IActionResult Search(string q)
         {

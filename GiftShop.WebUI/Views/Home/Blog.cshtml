@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/_siteLayout.cshtml";
+}
+<section class="blog-section" style="max-width: 1200px; margin: auto; padding: 2rem; font-family: 'Segoe UI', sans-serif; background-color: #fff0f5;">
+    <h2 style="text-align: center; color: #e91e63; font-size: 2.5rem; margin-bottom: 1rem;">Hediye Rehberi</h2>
+    <p style="text-align: center; color: #333; margin-bottom: 2rem;">İlham verici fikirler, trendler ve hediye önerileri burada.</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+
+        @{
+            var titles = new[] {
+                "Kişiye Özel Hediyelerle Fark Yaratın",
+                "Romantik Hediye Seçenekleri",
+                "Yeni İşe Başlayanlara Ne Alınır?",
+                "Anneler Günü İçin Anlamlı Hediyeler"
+                };
+            var summaries = new[] {
+                "İsimli kalemlerden çerçevelere, özel dokunuşlar katın...",
+                "Sevdiğiniz kişiyi mutlu edecek zarif sürprizler...",
+                "Yeni başlangıçlar için özel, zarif hediye önerileri...",
+                "Annenize duygu dolu, anlamlı hediyeler sunun..."
+                };
+            var details = new[] {
+                "Kişiye özel ürünler, hediyenize anlam katar. İsim, tarih veya özel mesajlar ekleyerek sevdiklerinize unutulmaz bir deneyim yaşatabilirsiniz....",
+                "Romantik hediyeler, duygularınızı ifade etmenin en zarif yoludur. Kalpli kutular, kırmızı temalı ürünler ve aşk dolu notlarla sevginizi gösterin...",
+                "Yeni iş hediyeleri, başarı dileklerinizi iletmenin harika bir yoludur. Şık defterler, isimli kalemler ve masa üstü aksesuarlar ideal tercihlerdir...",
+                "Anneler Günü'nde annenize sevginizi anlatmanın en güzel yolu anlamlı hediyelerdir. El yapımı ürünler, kişisel notlar ve çiçeklerle dolu bir sürpriz hazırlayın..."
+                };
+            var imgPaths = new[] {
+                "/Img/1000_F_87438809_sVF8ddqAqfKSglsxD7T8UO5nnQrPTotB.jpg",
+                "/Img/1000_F_200055512_ZRVTJan3HTxkkp0WNQaxtOZo7jwvuiYK.jpg",
+                "/Img/1000_F_571660852_VV05bEOyaBDDnWd4XPNIkX7SY1nW8gxs.jpg",
+                "/Img/1000_F_414955978_phw5ZsT9tCn6SEZBnKh7X5iyR61BcsxH.jpg"
+                };
+        }
+
+        @for (int i = 0; i < 4; i++)
+        {
+            <div style="width: 280px; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                <img src="@imgPaths[i]" alt="Blog Görsel" style="width: 100%; border-radius: 6px;">
+                <h3 style="color: #e91e63; font-size: 1.2rem; margin-top: 0.8rem;">@titles[i]</h3>
+                <p style="color: #333;">@summaries[i]</p>
+                <div id="detail-@i" style="display: none; color: #555; margin-top: 10px;">@details[i]</div>
+                <a href="javascript:void(0);" onclick="toggleDetail(@i)" id="btn-@i" class="btn" style="display: inline-block; background: #e91e63; color: #fff; padding: 6px 14px; border-radius: 4px; margin-top: 10px; text-decoration: none;">Devamını Oku</a>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    function toggleDetail(index) {
+        const detail = document.getElementById("detail-" + index);
+        const btn = document.getElementById("btn-" + index);
+        const isVisible = detail.style.display === "block";
+
+        detail.style.display = isVisible ? "none" : "block";
+        btn.textContent = isVisible ? "Devamını Oku" : "Kapat";
+    }
+</script>
