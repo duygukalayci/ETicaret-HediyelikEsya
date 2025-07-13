@@ -71,11 +71,11 @@ Yönetici paneli ise siteyi yöneten kişilere ürünlerin eklenmesi, güncellen
 <img width="1920" height="1006" alt="Ekran Görüntüsü (13)" src="https://github.com/user-attachments/assets/4cc7ae58-1a66-4fb7-a243-4841e63d8296" />
 <img width="1920" height="988" alt="Ekran Görüntüsü (16)" src="https://github.com/user-attachments/assets/dd8daaf8-e469-49d0-9e59-57a093974018" />
 <img width="1920" height="978" alt="Ekran Görüntüsü (17)" src="https://github.com/user-attachments/assets/14df963e-74e1-4b42-878b-c35a37d37f58" />
-<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/8c4d0ae7-4c54-4e38-9120-56283e9fde93" />
 
 <img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/04a01825-70c2-4c34-86cc-92529944498c" />
 
-<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/4f649214-0d3c-4c67-bcb2-1a42dfda71dd" />
-<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/1fac7804-ffa2-41fe-bfe7-380cc904c8a2" />
-<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/3b4997b8-b6ef-487c-907e-a16420a78414" />
-<img width="1920" height="995" alt="Ekran Görüntüsü (18)" src="https://github.com/user-attachments/assets/ef057df5-eef5-4030-9441-4bd85a07c951" />
+<img width="1920" height="965" alt="Ekran Görüntüsü (19)" src="https://github.com/user-attachments/assets/14729115-6978-4660-b344-786d6691f442" />
+<img width="1920" height="1008" alt="Ekran Görüntüsü (20)" src="https://github.com/user-attachments/assets/74d5d59b-8653-4899-9880-3d01469a1134" />
+<img width="1920" height="998" alt="Ekran Görüntüsü (21)" src="https://github.com/user-attachments/assets/9c696db1-263d-42d3-9128-e7e17c15771d" />
+<img width="1920" height="1014" alt="Ekran Görüntüsü (22)" src="https://github.com/user-attachments/assets/abc65687-b6d9-4aaa-8dac-f0a4a80d7b3b" />
+<img width="1892" height="1008" alt="Ekran Görüntüsü (23)" src="https://github.com/user-attachments/assets/eff10b0a-321c-437f-b78e-21a1abc1ee42" />
